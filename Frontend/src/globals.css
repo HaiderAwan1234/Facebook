@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+.scrollbar::-webkit-scrollbar {
+  width: 8px; /* width of the scrollbar */
+  cursor: pointer;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* color of the tracking area */
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #bcc0c4; /* color of the scroll thumb */
+  border-radius: 10px; /* roundness of the scroll thumb */
+  cursor: pointer;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  transition: all;
+  background: #8a8d91; /* color when hovered */
+  cursor: pointer;
+}

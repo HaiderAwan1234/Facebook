@@ -3,7 +3,7 @@ import { AiFillQuestionCircle } from "react-icons/ai";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { PiWarningCircleFill } from "react-icons/pi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HashLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
 import { serviceUser, userReset } from "../../features/user/userSlice";
@@ -119,13 +119,19 @@ const SignupForm = () => {
   const { user, userError, userSuccess, userLoading, userMessage } =
     useSelector((state) => state.auth);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (userError) {
       toast.error(userMessage);
     }
 
+    if (userSuccess) {
+      navigate("/home");
+    }
+
     dispatch(userReset());
-  }, [userError]);
+  }, [userError, userSuccess]);
 
   return (
     <>
@@ -352,10 +358,10 @@ const SignupForm = () => {
         <button
           onClick={handleSignup}
           className={`rounded-full cursor-pointer sm:rounded-md text-[16px] text-white w-[80%] block font-semibold mb-3 mt-6 mx-auto  py-2 sm:font-bold sm:text-[18px] sm:w-[47%] transition-all ${
-            loading ? " bg-gray-500" : "bg-[#119F16]  hover:bg-[#36A420]"
+            userLoading ? " bg-gray-500" : "bg-[#119F16]  hover:bg-[#36A420]"
           }`}
         >
-          {loading ? (
+          {userLoading ? (
             <HashLoader className="block m-auto" size={26} color="white" />
           ) : (
             " Sign Up"
@@ -370,11 +376,6 @@ const SignupForm = () => {
             Already have an account?
           </Link>
         </p>
-
-
-
-        <p>sjggkkjhaclj</p>
-        
       </form>
     </>
   );

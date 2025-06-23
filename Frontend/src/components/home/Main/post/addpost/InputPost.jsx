@@ -1,0 +1,356 @@
+import React, { useEffect, useState } from "react";
+import Modal from "@mui/material/Modal";
+import { useSelector } from "react-redux";
+import { RxCross2 } from "react-icons/rx";
+import { FaArrowLeft, FaUser } from "react-icons/fa";
+import { TiWorld } from "react-icons/ti";
+import { IoMdArrowDropdown } from "react-icons/io";
+import { CiFaceSmile } from "react-icons/ci";
+import { FaRegLightbulb } from "react-icons/fa";
+import { MdArrowBackIos } from "react-icons/md";
+import { colorData } from "./data/colorData";
+import { IoGrid } from "react-icons/io5";
+import { motion } from "framer-motion";
+import { IoMdArrowBack } from "react-icons/io";
+import { decorate_data } from "./data/decorate_data";
+
+export default function InputPost() {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const [paragraph, setParagraph] = useState(false);
+  const [textArea, setTextArea] = useState("");
+  const [openColor, setopenColor] = useState(false);
+  const [decorate, setDecorate] = useState(false);
+  const [slide, setSlide] = useState(false);
+
+  const { user, userMessage, userError, userSuccess, userLoading } =
+    useSelector((state) => state.auth);
+
+  const [selectedColor, setSelectedColor] = useState({
+    startColor: "#ffffff",
+    endColor: "#ffffff",
+    image: "",
+  });
+
+  const { startColor, endColor, image } = selectedColor;
+
+  const handleClose = () => {
+    setOpen(false);
+    setopenColor(false);
+    setSelectedColor({
+      startColor: "#ffffff",
+      endColor: "#ffffff",
+      image: "",
+    });
+    setSlide(false);
+    setTextArea("");
+  };
+
+  const textAreaChange = (e) => {
+    setTextArea(e.target.value);
+  };
+
+  useEffect(() => {
+    if (textArea.length > 0) {
+      setParagraph(false);
+    } else {
+      setParagraph(true);
+    }
+  }, [textArea]);
+
+  return (
+    <>
+      <div
+        onClick={handleOpen}
+        className="INPUT bg-[#edeef1] hover:bg-[#e4e4e4] transition-all py-[8.5px] w-full rounded-full cursor-pointer"
+      >
+        <p className="px-2 sm:px-3 text-gray-500 text-[14.5px] sm:text-[17px]">
+          {" "}
+          Whats on your mind , {user?.f_name}
+        </p>
+      </div>
+      <Modal
+        style={{ backdropFilter: "blur(1px)", background: "255,255,255,0.1" }}
+        open={open}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <div className={`MAIN  flex justify-center items-center h-screen`}>
+          <div
+            className={`CARD transition-all duration-200  bg-white py-3 w-[95%] sm:w-[78%] md:w-[64%] lg:w-[50%] xl:w-[40%]  rounded-lg shadow-lg  relative overflow-hidden`}
+          >
+            <div className="TOP-FLEX  flex px-4">
+              <p className="TOP-CHILD1 text-center font-bold text-[19px] sm:text-[21px] w-full">
+                Create post
+              </p>
+
+              <div onClick={handleClose} className="TOP-CHILD2">
+                <div className="CROSS cursor-pointer bg-gray-200 flex items-center justify-center h-[30px] w-[30px] sm:h-[35px] sm:w-[35px] rounded-full">
+                  <RxCross2 className="text-[21px] sm:text-[25px] text-gray-600 font-bold" />
+                </div>
+              </div>
+            </div>
+
+            <hr className="text-gray-300 mt-2 sm:mt-3" />
+
+            {/* ........USER INFORMATION.......... */}
+
+            <div className="flex items-center gap-4 sm:gap-2 pt-3 px-3">
+              <div className="div">
+                <div className=" cursor-pointer w-[39px] sm:w-[41px] h-[39px] sm:h-[41px] bg-gray-200 border-gray-300 rounded-full border flex justify-center items-center">
+                  <FaUser className="text-gray-600 text-[21px] sm:text-[23px]" />
+                </div>
+              </div>
+
+              <div className="flex flex-col justify-center gap-[2px] sm:gap-[1px]">
+                <p className="font-semibold pl-1">
+                  {user?.f_name} {user?.l_name}
+                </p>
+
+                <div className="BOX cursor-pointer flex items-center justify-center gap-1 text-gray-900 bg-gray-200 px-1 py-1 rounded-md">
+                  <div className="WORLD flex items-center justify-center">
+                    <TiWorld />
+                  </div>
+                  <p className="text-[13px] font-semibold">Public</p>
+                  <div className="arrow flex items-center justify-center ">
+                    <IoMdArrowDropdown />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* ........USER INFORMATION...END.... */}
+
+            <div className="relative">
+              {paragraph ? (
+                <p className="absolute pointer-events-none text-white text-[19px] sm:text-[27px]  px-1 sm:px-4 mt-3 py-1 font-semibold top-17 left-2 sm:left-12 ">{`What's on your mind, ${user?.f_name}?`}</p>
+              ) : (
+                <p className=""></p>
+              )}
+
+              <textarea
+                style={{
+                  backgroundImage: decorate
+                    ? `url(${image})`
+                    : `linear-gradient(60deg,${startColor},${endColor})`,
+                  backgroundPosition: "center",
+                  backgroundSize: "cover",
+                }}
+                className={`post-caption w-full mt-3 border-0 outline-0  transition-all duration-200   ${
+                  startColor == "#ffffff"
+                    ? "text-black h-[120px] py-1  text-[19px] sm:text-[22px] px-3 sm:px-4"
+                    : "text-white h-[220px] pt-18 text-center font-semibold text-[19px] sm:text-[27px] px-3 sm:px-4"
+                }`}
+                placeholder={
+                  startColor == "#ffffff"
+                    ? `What's on your mind, ${user?.f_name}?`
+                    : ""
+                }
+                value={textArea}
+                onChange={textAreaChange}
+              ></textarea>
+            </div>
+
+            <div className="COLOR flex items-center justify-between px-1 sm:px-3">
+              <div
+                onClick={() => setopenColor(!openColor)}
+                className="cursor-pointer"
+              >
+                {openColor ? (
+                  <>
+                    <div className=" bg-gray-300 ml-1 w-[30px] h-[30px] sm:w-[33px] sm:h-[33px] rounded-md flex items-center justify-center">
+                      <MdArrowBackIos className="text-gray-700 ml-1" />
+                    </div>
+                  </>
+                ) : (
+                  <img
+                    className="w-[30px] h-[30px]  sm:w-[33px] sm:h-[33px]"
+                    src="https://www.facebook.com/images/composer/SATP_Aa_square-2x.png"
+                  />
+                )}
+              </div>
+
+              <div className="flex items-center gap-2 overflow-x-scroll sm:overflow-hidden px-2 py-1 scrollbar3">
+                {openColor && (
+                  <div className="flex items-center justify-center gap-2 mt-[15px] sm:mt-0">
+                    {colorData?.map((item, index) => {
+                      return (
+                        <motion.div
+                          onClick={() => {
+                            index == 7 ? setDecorate(true) : setDecorate(false);
+                            setSelectedColor(
+                              index == 7
+                                ? {
+                                    startColor: "",
+                                    endColor: "",
+                                    image: item?.image,
+                                  }
+                                : {
+                                    startColor: item?.startColor,
+                                    endColor: item?.endColor,
+                                    image: "",
+                                  }
+                            );
+
+                            item?.startColor === "#ffffff"
+                              ? setParagraph(false)
+                              : setParagraph(true);
+                          }}
+                          initial={{ opacity: 0, scale: 0, y: 16, rotate: 30 }}
+                          animate={{ opacity: 1, scale: 1, y: 0, rotate: 0 }}
+                          transition={{
+                            delay: index * 0.07,
+                            type: "spring",
+                            stiffness: 250,
+                            damping: 14,
+                          }}
+                          key={index}
+                          style={{
+                            background:
+                              index == 7
+                                ? `url(${item?.image})`
+                                : `linear-gradient(60deg , ${item?.startColor},${item?.endColor})`,
+                            backgroundPosition: "center",
+                            backgroundSize: "cover",
+                          }}
+                          className="cursor-pointer w-[29px] h-[29px] sm:w-[31px] sm:h-[31px] rounded-md border border-gray-300"
+                        ></motion.div>
+                      );
+                    })}
+
+                    {openColor && (
+                      <motion.div
+                        onClick={() => {
+                          setSlide(!slide);
+                        }}
+                        initial={{ opacity: 0, scale: 0, y: 17 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        transition={{
+                          delay: 0.6,
+                          type: "spring",
+                          stiffness: 250,
+                          damping: 14,
+                        }}
+                        className="bg-gray-400 flex items-center justify-center cursor-pointer w-[29px] h-[29px] sm:w-[31px] sm:h-[31px] rounded-md border border-gray-300"
+                      >
+                        <IoGrid />
+                      </motion.div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              <div className="TIP flex items-center gap-1">
+                <div className="div cursor-pointer">
+                  <div className="tip flex gap-1 items-center bg-[#585858] px-2 py-[2px] rounded">
+                    <div className="bulb">
+                      <FaRegLightbulb className="text-[14px]" color="white" />
+                    </div>
+                    <p className="text-[11px] text-white font-semibold -tracking-tighter">
+                      Tip
+                    </p>
+                  </div>
+                </div>
+
+                <div className="icon cursor-pointer">
+                  <CiFaceSmile className="text-[26px] text-gray-400" />
+                </div>
+              </div>
+            </div>
+
+            {/* .............TRY........... */}
+
+            {/* ............ SIDEBAR COLORS ............ */}
+
+            <div
+              className={`SIDEBAR-COLORS bg-white absolute py-3 w-[95%] sm:w-[78%] md:w-[64%] lg:w-[50%] xl:w-full rounded-lg shadow-lg h-[417px] transition-all duration-300 delay-200  ${
+                slide
+                  ? "translate-x-0 opacity-100"
+                  : "translate-x-full opacity-0"
+              }  ${
+                startColor == "#ffffff" ? "-translate-y-75" : "-translate-y-100"
+              }              `}
+            >
+              <div className="MAIN_CARD">
+                {/* .......TOP CHILD....... */}
+                <div className="TOP-CHILD2 px-4 flex sticky w-full">
+                  <div
+                    className="PARENT-cross w-full"
+                    onClick={() => {
+                      setSlide(false);
+                    }}
+                  >
+                    <div className="CROSS cursor-pointer bg-gray-200 flex items-center justify-center h-[30px] w-[30px] sm:h-[34px] sm:w-[34px] rounded-full hover:bg-gray-300 transition-all">
+                      <IoMdArrowBack className="text-[21px] sm:text-[23px] text-gray-600 font-bold" />
+                    </div>
+                  </div>
+
+                  <p className="TEXT -translate-x-14 sm:-translate-x-29 text-center font-bold text-[19px] sm:text-[21px] w-full">
+                    Choose Background
+                  </p>
+                </div>
+
+                <hr className="text-gray-300 mt-3" />
+
+                {/* ..........MAP...... */}
+
+                <div className="MAP px-5 h-[353px] overflow-y-scroll scrollbar">
+                  {decorate_data?.map((item, index) => {
+                    return (
+                      <div key={index} className="MAIN">
+                        <p className="text-[19px] sm:text-[17px] font-semibold pt-7 pb-2">
+                          {item?.title}
+                        </p>
+
+                        <div className="GRID pb-3 w-full">
+                          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-2 w-full">
+                            {item?.list?.map((item2, index2) => {
+                              return (
+                                <div
+                                  key={index2}
+                                  onClick={() => {
+                                    setSlide(false);
+
+                                    index == 2
+                                      ? setDecorate(false)
+                                      : setDecorate(true);
+
+                                    index == 2
+                                      ? setSelectedColor({
+                                          startColor: item2,
+                                          endColor: item2,
+                                          image: "",
+                                        })
+                                      : setSelectedColor({
+                                          startColor: "",
+                                          endColor: "",
+                                          image: item2?.image,
+                                        });
+                                  }}
+                                  style={{
+                                    background:
+                                      index == 2
+                                        ? `${item2}`
+                                        : `url(${item2.image})`,
+                                    backgroundPosition: "center",
+                                    backgroundSize: "cover",
+                                  }}
+                                  className="cursor-pointer w-full h-[80px] rounded-2xl bg-red-500 mt-[5px]"
+                                ></div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+            {/* ........TRY......... */}
+          </div>
+        </div>
+      </Modal>
+    </>
+  );
+}

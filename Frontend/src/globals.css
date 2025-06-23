@@ -22,3 +22,44 @@
   background: #8a8d91; /* color when hovered */
   cursor: pointer;
 }
+
+/* ..........2........... */
+
+.scrollbar2::-webkit-scrollbar {
+  width: 0px; /* width of the scrollbar */
+}
+
+.scrollbar2:hover::-webkit-scrollbar {
+  width: 8px; /* width of the scrollbar */
+  cursor: pointer;
+}
+
+.scrollbar2::-webkit-scrollbar-track {
+  background: #f1f1f1; /* color of the tracking area */
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.scrollbar2::-webkit-scrollbar-thumb {
+  background: #bcc0c4; /* color of the scroll thumb */
+  border-radius: 10px; /* roundness of the scroll thumb */
+  cursor: pointer;
+}
+
+.scrollbar2::-webkit-scrollbar-thumb:hover {
+  transition: all;
+  background: #8a8d91; /* color when hovered */
+  cursor: pointer;
+}
+
+.post-caption {
+  resize: none;
+}
+
+.post-caption::placeholder {
+  color: rgb(94, 94, 94);
+}
+
+.scrollbar3::-webkit-scrollbar {
+  width: 0px; /* width of the scrollbar */
+}

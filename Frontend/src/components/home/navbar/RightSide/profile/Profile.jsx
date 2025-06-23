@@ -8,11 +8,15 @@ import { IoIosArrowForward, IoMdSettings } from "react-icons/io";
 import { IoMoonSharp, IoPeopleCircleOutline } from "react-icons/io5";
 import { MdFeedback } from "react-icons/md";
 import { TbSquareRoundedLetterC } from "react-icons/tb";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
+  const { user, userError, userSuccess, userLoading, userMessage } =
+    useSelector((state) => state.auth);
+
   return (
     <>
-      <div className="right-Side-Bar fixed top-14 right-5 h-[462px] w-90 bg-[#FCFCFC] shadow-xl shadow-gray-300 rounded-2xl z-400">
+      <div className="right-Side-Bar fixed top-14 right-5 h-[462px] w-90 bg-[#FCFCFC] shadow-xl shadow-gray-300 rounded-2xl z-700">
         {/* // .....card */}
 
         <div className="card py-1 px-1 shadow-lg mt-3 mb-4 bg-[#FFFFFF] w-[91%] mx-auto rounded-xl">
@@ -20,7 +24,9 @@ const Profile = () => {
             <div className="icon">
               <CgProfile size={34} className=" sm:text-[20px] " />
             </div>
-            <div className="text-[16.4px] font-semibold">Haider Ali Awan</div>
+            <div className="text-[16.4px] font-semibold">
+              {user?.f_name} {user?.l_name}
+            </div>
           </div>
 
           <hr className="text-gray-200 my-1 mx-4" />

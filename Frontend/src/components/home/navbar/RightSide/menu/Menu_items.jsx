@@ -6,7 +6,7 @@ import { Create_data } from "../data/Create_data";
 const Menu_items = () => {
   return (
     <>
-      <div className="right-Side-Bar z-400 h-[513px] overflow-y-hidden bg-[#F8F9FB] fixed top-14 right-5 w-155  pb-15 shadow-2xl rounded-xl pr-1">
+      <div className="right-Side-Bar z-700 h-[513px] overflow-y-hidden bg-[#F8F9FB] fixed top-14 right-5 w-155  pb-15 shadow-2xl rounded-xl pr-1">
         <div className="fixed bg-[#F8F9FB] w-[45%] pt-2 rounded-xl px-4">
           <p className="text-[24px] font-bold">Menu</p>
         </div>

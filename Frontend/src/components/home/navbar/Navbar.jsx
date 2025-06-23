@@ -7,6 +7,7 @@ import { CgProfile } from "react-icons/cg";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import Menu_items from "./RightSide/menu/Menu_items";
 import Profile from "./RightSide/profile/Profile";
+import Messenger from "./RightSide/messenger/Messenger";
 
 const Navbar = () => {
   const [focus, setFocus] = useState(true);
@@ -25,7 +26,7 @@ const Navbar = () => {
           setNotification(false);
           setProfile(false);
         }}
-        className={`fixed cursor-pointer h-full top-0 left-0 bg-transparent z-800 ${
+        className={`fixed cursor-pointer h-full w-full top-0 left-0 bg-transparent z-700 ${
           display ? "block" : "hidden"
         }`}
       ></div>
@@ -80,13 +81,13 @@ const Navbar = () => {
 
         {/* >>>>>>>>>..........Mid Div........<<<<<<<<<<< */}
 
-        <div className="hidden  lg:block flex-1  justify-center z-200">
-          <ul className="flex items-center justify-center gap-2 unstyled">
+        <div className="hidden  lg:block flex-1  justify-center z-200 ml-0 lg:ml-20 xl:ml-0">
+          <ul className="flex items-center justify-center gap-5 lg:gap-2 unstyled">
             {Data_mid.map((item, index) => {
               return (
                 <li
                   key={index}
-                  className="flex cursor-pointer group items-center justify-center px-10 py-3 rounded-lg hover:bg-gray-100 text-[#606366] text-[28px] transition-all relative"
+                  className="flex cursor-pointer group items-center justify-center lg:px-7 xl:px-11 px-4 py-3 rounded-lg hover:bg-gray-100 text-[#606366] text-[28px] transition-all relative"
                 >
                   {item?.icon}
                   <div className="absolute left-1/2 top-full -translate-x-1/2 text-[13px] bg-gray-700 text-white py-1 px-3 rounded-2xl my-2 shadow-md transition-all duration-200 delay-200 opacity-0 group-hover:opacity-100">
@@ -100,7 +101,7 @@ const Navbar = () => {
 
         {/* >>>>>>>>>....... End Div ........<<<<<<<<< */}
 
-        <div className="flex-1 flex justify-center sm:justify-end gap-1 sm:gap-3 sm:pr-4 pl-8 sm:pl-0">
+        <div className="flex-1 flex justify-center sm:justify-end gap-1 sm:gap-3 sm:pr-4 pl-8 sm:pl-0 pb-1 sm:pb-0">
           {/* ..... */}
 
           <div
@@ -190,7 +191,8 @@ const Navbar = () => {
       {/* >>>>>>......... Menu-Items-Sisebar ........<<<<<<<<<< */}
 
       {menue && <Menu_items />}
-      {/* {profile && <Profile />} */}
+      {profile && <Profile />}
+      {messenger && <Messenger />}
     </>
   );
 };

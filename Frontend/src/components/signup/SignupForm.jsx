@@ -7,7 +7,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { HashLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
 import { serviceUser, userReset } from "../../features/user/userSlice";
-
 import toast from "react-hot-toast";
 
 const SignupForm = () => {
@@ -127,7 +126,7 @@ const SignupForm = () => {
     }
 
     if (userSuccess) {
-      navigate("/home");
+      navigate("/otp");
     }
 
     dispatch(userReset());
@@ -135,7 +134,7 @@ const SignupForm = () => {
 
   return (
     <>
-      <form className="bg-[#FFFFFF] mb-5 rounded-sm sm:rounded-xl shadow-xl w-[100%] xl:w-[34%] lg:w-[36%] md:w-[48%] sm:w-[55%] pt-2">
+      <form className="bg-[#FFFFFF] mb-5 rounded-sm sm:rounded-xl shadow-xl w-[95%] xl:w-[34%] lg:w-[36%] md:w-[48%] sm:w-[55%] pt-2 px-2">
         <p className="m-0 p-0 text-[24px] sm:text-[26px] text-center font-semibold tracking-tight">
           Create a new account
         </p>
@@ -362,7 +361,7 @@ const SignupForm = () => {
           }`}
         >
           {userLoading ? (
-            <HashLoader className="block m-auto" size={26} color="white" />
+            <HashLoader className="block m-auto" size={27} color="white" />
           ) : (
             " Sign Up"
           )}

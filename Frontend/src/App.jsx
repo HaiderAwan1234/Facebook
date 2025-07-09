@@ -4,14 +4,16 @@ import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
 import Home from "./pages/home/Home";
 import { Toaster } from "react-hot-toast";
+import OTPVerificationPage from "./pages/auth/Otp";
 const App = () => {
   return (
     <>
       <Router>
         <Toaster />
         <Routes>
-          <Route path="/" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/otp" element={<OTPVerificationPage />} />
+          <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
         </Routes>
       </Router>

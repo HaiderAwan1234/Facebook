@@ -34,6 +34,10 @@ export const userSchema = mongoose.Schema(
       type: String,
       required: [true, "Please select gender !!"],
     },
+    otp: {
+      type: Number,
+      default: null,
+    },
   },
   {
     timestamps: true,

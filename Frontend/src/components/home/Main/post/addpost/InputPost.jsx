@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RxCross2 } from "react-icons/rx";
 import { FaArrowLeft, FaUser } from "react-icons/fa";
 import { TiWorld } from "react-icons/ti";
@@ -13,6 +13,10 @@ import { IoGrid } from "react-icons/io5";
 import { motion } from "framer-motion";
 import { IoMdArrowBack } from "react-icons/io";
 import { decorate_data } from "./data/decorate_data";
+import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import { postReset, servicePost } from "../../../../../features/post/postSlice";
+import { toast } from "react-hot-toast";
+import { HashLoader } from "react-spinners";
 
 export default function InputPost() {
   const [open, setOpen] = useState(false);
@@ -22,6 +26,7 @@ export default function InputPost() {
   const [openColor, setopenColor] = useState(false);
   const [decorate, setDecorate] = useState(false);
   const [slide, setSlide] = useState(false);
+  const [disable, setDisable] = useState(false);
 
   const { user, userMessage, userError, userSuccess, userLoading } =
     useSelector((state) => state.auth);
@@ -53,10 +58,40 @@ export default function InputPost() {
   useEffect(() => {
     if (textArea.length > 0) {
       setParagraph(false);
+      setDisable(false);
     } else {
       setParagraph(true);
+      setDisable(true);
     }
   }, [textArea]);
+
+  const { post, postSuccess, postError, postLoading, postMessage } =
+    useSelector((state) => state.album);
+
+  const dispatch = useDispatch();
+
+  const handleNext = (e) => {
+    e.preventDefault();
+
+    const postData = {
+      textArea,
+      background: selectedColor,
+    };
+
+    dispatch(servicePost(postData));
+  };
+
+  useEffect(() => {
+    if (postError) {
+      toast.error(postMessage);
+      dispatch(postReset());
+    }
+
+    if (postSuccess) {
+      toast.success("Api is working");
+      dispatch(postReset());
+    }
+  }, [postError, postSuccess]);
 
   return (
     <>
@@ -77,7 +112,7 @@ export default function InputPost() {
       >
         <div className={`MAIN  flex justify-center items-center h-screen`}>
           <div
-            className={`CARD transition-all duration-200  bg-white py-3 w-[95%] sm:w-[78%] md:w-[64%] lg:w-[50%] xl:w-[40%]  rounded-lg shadow-lg  relative overflow-hidden`}
+            className={`CARD transition-all duration-200  bg-white py-3 w-[95%] sm:w-[78%] md:w-[64%] lg:w-[50%] xl:w-[40%]  rounded-xl shadow-lg  relative overflow-hidden`}
           >
             <div className="TOP-FLEX  flex px-4">
               <p className="TOP-CHILD1 text-center font-bold text-[19px] sm:text-[21px] w-full">
@@ -348,6 +383,62 @@ export default function InputPost() {
               </div>
             </div>
             {/* ........TRY......... */}
+
+            <div className="ADD_POST  flex justify-between items-center border boder-1 border-gray-300 w-[92%] py-4 px-4 mx-auto mt-5 rounded-lg shadow">
+              <div className="text font-semibold">Add to your post</div>
+              <div className="icon flex gap-4 items-center">
+                <div className="gallery">
+                  <img
+                    className="cursor-pointer"
+                    src="https://static.xx.fbcdn.net/rsrc.php/v4/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeGlGXwBTUxrTpENQuk_kyO4kBVQC4m7dx6QFVALibt3HprxmkBLsW67SCi3hDaW6l8OaHadBDjYnAypHNzbyKh5"
+                    alt=""
+                  />
+                </div>
+                <div className="user">
+                  <img
+                    className="cursor-pointer"
+                    src="https://static.xx.fbcdn.net/rsrc.php/v4/yq/r/b37mHA1PjfK.png?_nc_eui2=AeEqoau4P7ymL0lhacnm04-Cc9ExYuivsM1z0TFi6K-wzaCouKPbzRuPCRLC0qEMMUdm18lGvPqCTbAelV7KwsS5"
+                    alt=""
+                  />
+                </div>
+                <div className="emogi">
+                  <img
+                    className="cursor-pointer"
+                    src="https://static.xx.fbcdn.net/rsrc.php/v4/yd/r/Y4mYLVOhTwq.png?_nc_eui2=AeFhHzYJLSh8b4ns9cYSqDlRfPQ6N5_OUfV89Do3n85R9X2jcsCGAZzlMhSSlAnKufNLmh7S_vkYB6BJxFVqOAob"
+                    alt=""
+                  />
+                </div>
+                <div className="location">
+                  <img
+                    className="cursor-pointer"
+                    src="https://static.xx.fbcdn.net/rsrc.php/v4/y1/r/8zlaieBcZ72.png?_nc_eui2=AeHSMd2x3jI6yKqEy3VTyIEyu7QmHo__KE27tCYej_8oTVcwQAzrt0GUmIgtqzXH5kUEbtS-_w5FKhZ7mjoMXDFS"
+                    alt=""
+                  />
+                </div>
+                <div className="whatsapp">
+                  <img
+                    className="cursor-pointer"
+                    src="https://static.xx.fbcdn.net/rsrc.php/v4/y3/r/NeSKjwaLVhE.png?_nc_eui2=AeGYdOy1KLRhiKKlihnqgwzAIokjsgz5C4ciiSOyDPkLh9fBa0KFXl8Lt0pI8P7FRvhT8lOaJ-GS6mB3RcJSxkYF"
+                    alt=""
+                  />
+                </div>
+                <div className="dot text-gray-500 text-[21px]">
+                  <HiOutlineDotsHorizontal cursor="pointer" />
+                </div>
+              </div>
+            </div>
+
+            <div className="BUTTON flex justify-center">
+              <button
+                disabled={disable}
+                onClick={handleNext}
+                className={` text-white flex items-center justify-center w-[92%] py-2 mx-auto mt-4 rounded-lg shadow  cursor-pointer mb-1 ${
+                  disable || postLoading ? "bg-gray-400" : "bg-[#0F5EEA]"
+                }`}
+              >
+                {postLoading ? <HashLoader size={24} color="white" /> : " Next"}
+              </button>
+            </div>
           </div>
         </div>
       </Modal>

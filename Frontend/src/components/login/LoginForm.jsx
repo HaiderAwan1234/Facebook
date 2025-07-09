@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { serviceLogin, userReset } from "../../features/user/userSlice";
+import { toast } from "react-hot-toast";
+import { HashLoader } from "react-spinners";
 
 const LoginForm = () => {
   const [close, setClose] = useState(true);
@@ -29,6 +33,32 @@ const LoginForm = () => {
     }
   };
 
+  const navigate = useNavigate();
+
+  const { user, userError, userSuccess, userMessage, userLoading } =
+    useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const otpData = { inputEmail, inputPassword };
+
+    dispatch(serviceLogin(otpData));
+  };
+
+  useEffect(() => {
+    if (userError) {
+      toast.error(userMessage);
+    }
+
+    if (userSuccess) {
+      navigate("/home");
+    }
+
+    dispatch(userReset());
+  }, [userError, userSuccess]);
+
   useEffect(() => {
     if (inputPassword.length > 0) {
       setShow(true);
@@ -48,7 +78,8 @@ const LoginForm = () => {
             boxShadow:
               "rgba(1, 0, 30, 0.25) 0px 0px 30px -17px inset, rgba(0, 0, 0, 0) 0px 0px 0px -50px inset",
           }}
-          className=" w-[100%] text-[16px] sm:text-[17px] transition-all py-3 px-3 border-1 border-gray-300 outline-0 rounded-md focus:border-1 focus:border-blue-500 focus:shadow focus:shadow-blue-100"
+          className={`w-[100%] text-[16px] sm:text-[17px] transition-all py-3 px-3 border-1 outline-0 rounded-md focus:border-1 focus:border-blue-500 focus:shadow focus:shadow-blue-100 border-gray-300
+          `}
           type="text"
           placeholder="Email address or phone number"
         />
@@ -84,8 +115,17 @@ const LoginForm = () => {
           )}
         </div>
 
-        <button className="w-[100%]  cursor-pointer rounded-md bg-[#0866FF] hover:bg-[#0867ffec] text-white text-[16px] sm:text-[19px] font-bold  px-2 py-2 mb-3">
-          Log in
+        <button
+          disabled={userLoading}
+          onClick={handleLogin}
+          className={`w-[100%]  cursor-pointer rounded-md text-white text-[16px] sm:text-[19px] font-bold  px-2 py-2 mb-3 text-center bg-[#0866FF]
+          `}
+        >
+          {userLoading ? (
+            <HashLoader className="block m-auto" size={25} color="white" />
+          ) : (
+            "Log in"
+          )}
         </button>
 
         <Link

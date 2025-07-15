@@ -63,7 +63,7 @@ export default function InputPost() {
       setParagraph(true);
       setDisable(true);
     }
-  }, [textArea]);
+  }, [textArea, paragraph]);
 
   const { post, postSuccess, postError, postLoading, postMessage } =
     useSelector((state) => state.album);
@@ -76,6 +76,7 @@ export default function InputPost() {
     const postData = {
       textArea,
       background: selectedColor,
+      user_id: user?._id,
     };
 
     dispatch(servicePost(postData));
@@ -89,6 +90,17 @@ export default function InputPost() {
 
     if (postSuccess) {
       toast.success("Api is working");
+
+      setTextArea("");
+
+      setSelectedColor({
+        startColor: "#ffffff",
+        endColor: "#ffffff",
+        image: "",
+      });
+
+      setOpen(false);
+
       dispatch(postReset());
     }
   }, [postError, postSuccess]);
@@ -212,6 +224,7 @@ export default function InputPost() {
                       return (
                         <motion.div
                           onClick={() => {
+                            setTextArea("");
                             index == 7 ? setDecorate(true) : setDecorate(false);
                             setSelectedColor(
                               index == 7

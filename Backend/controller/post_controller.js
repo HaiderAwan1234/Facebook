@@ -11,9 +11,15 @@ export const post = async (req, res) => {
 
   const newPost = await Post.create({
     textArea,
-    // background,
+    background,
     user_id,
   });
 
   res.send(newPost);
+};
+
+export const getPost = async (req, res) => {
+  const allPost = await Post.find();
+
+  res.send(allPost);
 };

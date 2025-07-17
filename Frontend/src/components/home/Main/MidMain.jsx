@@ -6,11 +6,9 @@ import Story from "./story/Story";
 const MidMain = () => {
   return (
     <>
-      <div className="MidMain h-[525px] overflow-y-scroll">
+      <div className="MidMain h-[525px] overflow-y-scroll scrollbar3">
         <Addposts />
         <Story />
-        <Getpost />
-        <Getpost />
         <Getpost />
       </div>
     </>

@@ -89,8 +89,6 @@ export default function InputPost() {
     }
 
     if (postSuccess) {
-      toast.success("Api is working");
-
       setTextArea("");
 
       setSelectedColor({
@@ -311,7 +309,7 @@ export default function InputPost() {
             {/* ............ SIDEBAR COLORS ............ */}
 
             <div
-              className={`SIDEBAR-COLORS bg-white absolute py-3 w-[95%] sm:w-[78%] md:w-[64%] lg:w-[50%] xl:w-full rounded-lg shadow-lg h-[417px] transition-all duration-300 delay-200  ${
+              className={`SIDEBAR-COLORS bg-white  absolute py-3 w-[95%] sm:w-[78%] md:w-[64%] lg:w-[50%]  xl:w-full rounded-lg shadow-lg h-[450px] transition-all duration-300 delay-200  ${
                 slide
                   ? "translate-x-0 opacity-100"
                   : "translate-x-full opacity-0"
@@ -342,11 +340,11 @@ export default function InputPost() {
 
                 {/* ..........MAP...... */}
 
-                <div className="MAP px-5 h-[353px] overflow-y-scroll scrollbar">
+                <div className="MAP px-5 h-[385px] overflow-y-scroll scrollbar">
                   {decorate_data?.map((item, index) => {
                     return (
                       <div key={index} className="MAIN">
-                        <p className="text-[19px] sm:text-[17px] font-semibold pt-7 pb-2">
+                        <p className="text-[19px] sm:text-[17px] font-semibold pt-5 pb-2">
                           {item?.title}
                         </p>
 

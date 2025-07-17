@@ -9,10 +9,9 @@ export const postService = async (postData) => {
   return response.data;
 };
 
-export const getPostService = async (postData) => {
+export const getPostService = async () => {
   const response = await axios.get(
-    "http://localhost:5174/api/post/getUserPost",
-    postData
+    "http://localhost:5174/api/post/getUserPost"
   );
 
   return response.data;

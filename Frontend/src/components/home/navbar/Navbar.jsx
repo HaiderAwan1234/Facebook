@@ -8,6 +8,7 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import Menu_items from "./RightSide/menu/Menu_items";
 import Profile from "./RightSide/profile/Profile";
 import Messenger from "./RightSide/messenger/Messenger";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [focus, setFocus] = useState(true);
@@ -16,6 +17,9 @@ const Navbar = () => {
   const [notification, setNotification] = useState(false);
   const [profile, setProfile] = useState(false);
   const [display, setDisplay] = useState(false);
+  const [friends, setFriends] = useState(false);
+
+  const navigate = useNavigate();
   return (
     <>
       <div
@@ -86,6 +90,10 @@ const Navbar = () => {
             {Data_mid.map((item, index) => {
               return (
                 <li
+                  onClick={() => {
+                    index == 1 && navigate("/friends");
+                    index == 0 && navigate("/home");
+                  }}
                   key={index}
                   className="flex cursor-pointer group items-center justify-center lg:px-7 xl:px-11 px-4 py-3 rounded-lg hover:bg-gray-100 text-[#606366] text-[28px] transition-all relative"
                 >

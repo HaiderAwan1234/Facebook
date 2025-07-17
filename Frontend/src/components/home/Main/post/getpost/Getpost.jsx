@@ -108,7 +108,7 @@ const Getpost = () => {
                     : "h-[280px] sm:h-[370px] text-white"
                 }`}
               >
-                <p className="first-letter:uppercase text-[19px] sm:text-[25px] px-3 sm:px-10">
+                <p className="first-letter:uppercase text-[19px] sm:text-[25px] px-3 sm:px-9">
                   {item?.background?.startColor == "#ffffff"
                     ? ""
                     : item?.textArea}

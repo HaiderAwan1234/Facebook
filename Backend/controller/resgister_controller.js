@@ -199,13 +199,13 @@ export const register = async (req, res) => {
     throw new Error("Email already exist");
   }
 
-  // const hashPassword = await bcrypt.hash(inputPassword, 10);
+  const hashPassword = await bcrypt.hash(inputPassword, 10);
 
   const newUser = await User.create({
     f_name,
     l_name,
     inputEmail,
-    inputPassword,
+    inputPassword: hashPassword,
     date,
     month,
     year,
@@ -259,9 +259,9 @@ export const login = async (req, res) => {
     throw new Error("Invalid email !!");
   }
 
-  // const dcrypt = await bcrypt.compare(inputPassword, checkMail.inputPassword);
+  const dcrypt = await bcrypt.compare(inputPassword, checkMail.inputPassword);
 
-  if (!inputPassword == checkMail.inputPassword) {
+  if (!dcrypt == checkMail.inputPassword) {
     res.status(401);
     throw new Error("Invalid password !!");
   }

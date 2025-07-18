@@ -7,6 +7,7 @@ import Friends from "./pages/home/Friends";
 
 import { Toaster } from "react-hot-toast";
 import OTPVerificationPage from "./pages/auth/Otp";
+import Videos from "./components/home/navbar/Videoss/Videos";
 const App = () => {
   return (
     <>
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/friends" element={<Friends />} />
+          <Route path="/videos" element={<Videos />} />
         </Routes>
       </Router>
     </>

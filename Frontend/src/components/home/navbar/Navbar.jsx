@@ -17,7 +17,6 @@ const Navbar = () => {
   const [notification, setNotification] = useState(false);
   const [profile, setProfile] = useState(false);
   const [display, setDisplay] = useState(false);
-  const [friends, setFriends] = useState(false);
 
   const navigate = useNavigate();
   return (
@@ -93,6 +92,7 @@ const Navbar = () => {
                   onClick={() => {
                     index == 1 && navigate("/friends");
                     index == 0 && navigate("/home");
+                    index == 2 && navigate("/videos");
                   }}
                   key={index}
                   className="flex cursor-pointer group items-center justify-center lg:px-7 xl:px-11 px-4 py-3 rounded-lg hover:bg-gray-100 text-[#606366] text-[28px] transition-all relative"

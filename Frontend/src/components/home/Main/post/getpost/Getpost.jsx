@@ -14,16 +14,9 @@ import {
 import toast from "react-hot-toast";
 
 const Getpost = () => {
-  const [selectedColor, setSelectedColor] = useState({
-    startColor: "#ffffff",
-    endColor: "#ffffff",
-    image: "",
-  });
-
-  const { startColor, endColor, image } = selectedColor;
-
   const { post, postSuccess, postError, postMessage, postLoading } =
     useSelector((state) => state.album);
+
   const dispatch = useDispatch();
 
   useEffect(() => {

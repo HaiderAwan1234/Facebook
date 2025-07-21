@@ -11,17 +11,19 @@ export const leftMainData = [
     title: "Friends",
     para: "Get insights, create ads and explore management tools to help reach your audience.",
   },
+
   {
     id: 3,
-    logo: <img className="w-[30px]" src="/rightside_icons/center.png" />,
-    title: "Ad Center",
-    para: "Manage all the ads you create in Pages, with streamlined features.",
+    logo: <img className="w-[30px]" src="/rightside_icons/climate.png" />,
+    title: "Climate Science Center",
+    para: "Learn about climate change and its effects.",
   },
+
   {
     id: 4,
-    logo: <img className="w-[30px]" src="/rightside_icons/ads.png" />,
-    title: "Ads Manager",
-    para: "Build credibility and deepen engagement with your customers by subscribing to Meta Verified.",
+    logo: <img className="w-[30px]" src="/rightside_icons/video.png" />,
+    title: "Videos",
+    para: "A video destination personalized to your interests and connections.",
   },
 
   {
@@ -30,29 +32,33 @@ export const leftMainData = [
     title: "Events",
     para: "Organize or find events and other things to do online and nearby.",
   },
+
   {
     id: 6,
-    logo: <img className="w-[30px]" src="/rightside_icons/professional.png" />,
-    title: "Professional dashboard",
-    para: "Search for friends or people you may know.",
+    logo: <img className="w-[30px]" src="/rightside_icons/feeds.png" />,
+    title: "Feeds",
+    para: "See the most recent posts from your friends, groups, Pages and more.",
   },
+
   {
     id: 7,
+    logo: <img className="w-[30px]" src="/rightside_icons/ads.png" />,
+    title: "Ads Manager",
+    para: "Build credibility and deepen engagement with your customers by subscribing to Meta Verified.",
+  },
+
+  {
+    id: 8,
     logo: <img className="w-[30px]" src="/rightside_icons/groups.png" />,
     title: "Groups",
     para: "Connect with people who share your interests.",
   },
+
   {
-    id: 8,
+    id: 9,
     logo: <img className="w-[30px]" src="/rightside_icons/news.png" />,
     title: "News Feed",
     para: "See relevant posts from people and Pages you follow.",
-  },
-  {
-    id: 9,
-    logo: <img className="w-[30px]" src="/rightside_icons/feeds.png" />,
-    title: "Feeds",
-    para: "See the most recent posts from your friends, groups, Pages and more.",
   },
   {
     id: 10,
@@ -73,11 +79,12 @@ export const leftMainData = [
     title: "Play games",
     para: "Play your favorite games.",
   },
+
   {
     id: 13,
-    logo: <img className="w-[30px]" src="/rightside_icons/video.png" />,
-    title: "Video",
-    para: "A video destination personalized to your interests and connections.",
+    logo: <img className="w-[30px]" src="/rightside_icons/professional.png" />,
+    title: "Professional dashboard",
+    para: "Search for friends or people you may know.",
   },
 
   {
@@ -113,10 +120,11 @@ export const leftMainData = [
   },
   {
     id: 19,
-    logo: <img className="w-[30px]" src="/rightside_icons/climate.png" />,
-    title: "Climate Science Center",
-    para: "Learn about climate change and its effects.",
+    logo: <img className="w-[30px]" src="/rightside_icons/center.png" />,
+    title: "Ad Center",
+    para: "Manage all the ads you create in Pages, with streamlined features.",
   },
+
   {
     id: 20,
     logo: <img className="w-[30px]" src="/rightside_icons/fund.png" />,

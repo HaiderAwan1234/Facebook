@@ -4,6 +4,7 @@ import { CgProfile } from "react-icons/cg";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const listVariant = {
   initial: {},
@@ -35,6 +36,8 @@ const LeftSidebar = () => {
     setOpen(!open);
   };
 
+  const navigate = useNavigate();
+
   return (
     <div className="leftSidebar h-[525px] overflow-y-auto scrollbar2">
       {/* Profile Section */}
@@ -58,6 +61,12 @@ const LeftSidebar = () => {
           .slice(0, open ? leftMainData.length : 8)
           .map((item, index) => (
             <motion.li
+              onClick={() => {
+                index == 1 && navigate("/friends");
+                index == 2 && navigate("/climate");
+                index == 3 && navigate("/videos");
+                index == 5 && navigate("/feed");
+              }}
               key={index}
               variants={itemVariant}
               className="px-2 cursor-pointer"

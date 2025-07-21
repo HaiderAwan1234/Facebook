@@ -1,13 +1,14 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
 import Home from "./pages/home/Home";
 import Friends from "./pages/home/Friends";
-
-import { Toaster } from "react-hot-toast";
 import OTPVerificationPage from "./pages/auth/Otp";
 import Videos from "./components/home/navbar/Videoss/Videos";
+import ClimateCenter from "./pages/home/ClimateCenter";
+import FeedsPage from "./pages/home/FeedsPage";
 const App = () => {
   return (
     <>
@@ -20,6 +21,8 @@ const App = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/friends" element={<Friends />} />
           <Route path="/videos" element={<Videos />} />
+          <Route path="/climate" element={<ClimateCenter />} />
+          <Route path="/feed" element={<FeedsPage />} />
         </Routes>
       </Router>
     </>

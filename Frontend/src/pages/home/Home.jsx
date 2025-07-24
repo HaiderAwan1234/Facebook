@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "../../components/home/navbar/Navbar";
-import RightSidebar from "../../components/home/Main/RightSidebar";
 import MidMain from "../../components/home/Main/MidMain";
 import LeftSidebar from "./../../components/home/Main/LeftSidebar";
 import Ads from "./../../components/home/Main/AdsSection";
@@ -19,8 +18,7 @@ const Home = () => {
           <MidMain />
         </div>
 
-        <div className="md:block w-4/12 lg:w-3/12">
-          {/* <RightSidebar /> */}
+        <div className="hidden md:block w-5/12 lg:w-3/12">
           <Ads />
         </div>
       </div>

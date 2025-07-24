@@ -19,7 +19,7 @@ export const post = async (req, res) => {
 };
 
 export const getPost = async (req, res) => {
-  const allPost = await Post.find();
+  const allPost = await Post.find().sort({ createdAt: -1 });
 
   res.send(allPost);
 };

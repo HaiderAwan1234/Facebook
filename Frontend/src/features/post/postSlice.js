@@ -57,7 +57,7 @@ export const postSlice = createSlice({
         state.postSuccess = true;
         state.postLoading = false;
         state.postError = false;
-        state.post.push(action.payload);
+        state.post.unshift(action.payload);
       })
       .addCase(serviceGetPost.pending, (state, action) => {
         state.postLoading = true;
@@ -69,7 +69,6 @@ export const postSlice = createSlice({
         state.postMessage = action.payload;
       })
       .addCase(serviceGetPost.fulfilled, (state, action) => {
-        state.postSuccess = true;
         state.postLoading = false;
         state.postError = false;
         state.post = action.payload;

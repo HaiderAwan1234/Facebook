@@ -12,6 +12,7 @@ import {
   serviceGetPost,
 } from "../../../../../features/post/postSlice";
 import toast from "react-hot-toast";
+import moment from "moment";
 
 const Getpost = () => {
   const { post, postSuccess, postError, postMessage, postLoading } =
@@ -62,7 +63,12 @@ const Getpost = () => {
                     </p>
 
                     <div className="TIME/PUBLIC flex items-center gap-2 text-gray-600 ">
-                      <p className="text-[13px] cursor-pointer">6h</p>
+                      <p className="text-[13px] cursor-pointer">
+                        {" "}
+                        {moment().diff(moment(item?.createdAt), "hours") < 24
+                          ? moment(item?.createdAt).fromNow()
+                          : moment(item?.createdAt).format("MMM D, YYYY")}
+                      </p>
                       <div className="ICON translate-y-[1px] cursor-pointer">
                         <TiWorld />
                       </div>

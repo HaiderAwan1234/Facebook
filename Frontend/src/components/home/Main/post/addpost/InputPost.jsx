@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { RxCross2 } from "react-icons/rx";
-import { FaArrowLeft, FaUser } from "react-icons/fa";
+import { FaArrowLeft, FaImages, FaTimes, FaUser } from "react-icons/fa";
 import { TiWorld } from "react-icons/ti";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { CiFaceSmile } from "react-icons/ci";
@@ -27,6 +27,9 @@ export default function InputPost() {
   const [decorate, setDecorate] = useState(false);
   const [slide, setSlide] = useState(false);
   const [disable, setDisable] = useState(false);
+  const [media, setMedia] = useState(false);
+  const [selectImage, setSelectImage] = useState(false);
+  const [url, setUrl] = useState(null);
 
   const { user, userMessage, userError, userSuccess, userLoading } =
     useSelector((state) => state.auth);
@@ -49,6 +52,9 @@ export default function InputPost() {
     });
     setSlide(false);
     setTextArea("");
+    setMedia(false);
+    setSelectImage(false);
+    setUrl(null);
   };
 
   const textAreaChange = (e) => {
@@ -65,6 +71,14 @@ export default function InputPost() {
     }
   }, [textArea, paragraph]);
 
+  useEffect(() => {
+    if (url) {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
+  }, [url]);
+
   const { post, postSuccess, postError, postLoading, postMessage } =
     useSelector((state) => state.album);
 
@@ -80,6 +94,10 @@ export default function InputPost() {
     };
 
     dispatch(servicePost(postData));
+
+    setMedia(false);
+    setSelectImage(false);
+    setUrl(null);
   };
 
   useEffect(() => {
@@ -102,6 +120,14 @@ export default function InputPost() {
       dispatch(postReset());
     }
   }, [postError, postSuccess]);
+
+  const changeImage = (e) => {
+    let image = e.target.files[0];
+    let imageUrl = URL.createObjectURL(image);
+
+    setUrl(imageUrl);
+    setSelectImage(true);
+  };
 
   return (
     <>
@@ -183,9 +209,11 @@ export default function InputPost() {
                 }}
                 className={`post-caption w-full mt-3 border-0 outline-0  transition-all duration-200   ${
                   startColor == "#ffffff"
-                    ? "text-black h-[120px] py-1  text-[19px] sm:text-[22px] px-3 sm:px-4"
+                    ? media
+                      ? "text-black h-[35px] py-1  text-[16px] sm:text-[17px] px-3 sm:px-4"
+                      : "text-black h-[120px] py-1  text-[19px] sm:text-[22px] px-3 sm:px-4"
                     : "text-white h-[220px] pt-18 text-center font-semibold text-[19px] sm:text-[27px] px-3 sm:px-4"
-                }`}
+                } `}
                 placeholder={
                   startColor == "#ffffff"
                     ? `What's on your mind, ${user?.f_name}?`
@@ -196,14 +224,20 @@ export default function InputPost() {
               ></textarea>
             </div>
 
-            <div className="COLOR flex items-center justify-between px-1 sm:px-3">
+            <div
+              className={` COLOR flex items-center justify-between px-1 sm:px-3 ${
+                media ? "hidden" : "block"
+              }`}
+            >
               <div
                 onClick={() => setopenColor(!openColor)}
                 className="cursor-pointer"
               >
                 {openColor ? (
                   <>
-                    <div className=" bg-gray-300 ml-1 w-[30px] h-[30px] sm:w-[33px] sm:h-[33px] rounded-md flex items-center justify-center">
+                    <div
+                      className={` bg-gray-300 ml-1 w-[30px] h-[30px] sm:w-[33px] sm:h-[33px] rounded-md flex items-center justify-center`}
+                    >
                       <MdArrowBackIos className="text-gray-700 ml-1" />
                     </div>
                   </>
@@ -215,7 +249,9 @@ export default function InputPost() {
                 )}
               </div>
 
-              <div className="flex items-center gap-2 overflow-x-scroll sm:overflow-hidden px-2 py-1 scrollbar3">
+              <div
+                className={`flex items-center gap-2 overflow-x-scroll sm:overflow-hidden px-2 py-1 scrollbar3`}
+              >
                 {openColor && (
                   <div className="flex items-center justify-center gap-2 mt-[15px] sm:mt-0">
                     {colorData?.map((item, index) => {
@@ -393,46 +429,130 @@ export default function InputPost() {
                 </div>
               </div>
             </div>
+
+            {/* ........TRY........... */}
+
+            <input
+              onChange={changeImage}
+              type="file"
+              name="file"
+              id="File"
+              className="hidden"
+            />
+
+            {/* ........MEDIA................ */}
+
+            {/* ....*/}
+
+            {media && (
+              <div className="px-2 sm:px-4">
+                <label htmlFor="File">
+                  <div
+                    className={` h-[240px] rounded-xl  ${
+                      selectImage
+                        ? "p-0 outline-0"
+                        : "p-2 outline-1 outline-gray-300"
+                    }`}
+                  >
+                    <div
+                      className={`relative h-full w-full max-w-xl  rounded-md border-0 p-1 flex flex-col  cursor-pointer items-center justify-center text-center ${
+                        selectImage ? "" : "bg-gray-100 hover:bg-gray-200"
+                      }`}
+                    >
+                      {/* Close button (non-functional) */}
+
+                      {url && (
+                        <button
+                          onClick={() => {
+                            setSelectImage(false);
+                            setUrl(null);
+                          }}
+                          className="absolute top-3 right-3 text-gray-600 hover:text-white  bg-white border border-gray-300 rounded-full p-2  hover:bg-gray-800 cursor-pointer transition-all duration-150"
+                        >
+                          <FaTimes className="text-sm" />
+                        </button>
+                      )}
+
+                      {/* Empty state */}
+
+                      {selectImage ? (
+                        <div className="IMAGE overflow-y-scroll scrollbar3">
+                          <img className="w-[510px]  rounded-md" src={url} />
+                        </div>
+                      ) : (
+                        <>
+                          <div className="bg-gray-200 p-4 rounded-full mb-4">
+                            <FaImages className="text-gray-700 text-2xl" />
+                          </div>
+                          <p className="font-medium text-black text-lg">
+                            Add photos/videos
+                          </p>
+                          <p className="text-gray-500 text-sm">
+                            or drag and drop
+                          </p>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </label>
+              </div>
+            )}
+
+            {/* .
+            .
+
+            . */}
+
             {/* ........TRY......... */}
 
-            <div className="ADD_POST  flex justify-between items-center border boder-1 border-gray-300 w-[92%] py-4 px-4 mx-auto mt-5 rounded-lg shadow">
-              <div className="text font-semibold">Add to your post</div>
-              <div className="icon flex gap-4 items-center">
-                <div className="gallery">
+            <div className="ADD_POST  flex justify-between items-center border boder-1 border-gray-300 w-[92%] py-3 sm:py-4 px-2 sm:px-4 mx-auto mt-5 rounded-lg shadow">
+              <div className="text-[14px] font-semibold">Add to your post</div>
+              <div className="icon flex gap-2 sm:gap-4 items-center">
+                {/* ............ */}
+
+                <div
+                  onClick={() => setMedia(true)}
+                  className="gallery cursor-pointer"
+                >
                   <img
-                    className="cursor-pointer"
-                    src="https://static.xx.fbcdn.net/rsrc.php/v4/y7/r/Ivw7nhRtXyo.png?_nc_eui2=AeGlGXwBTUxrTpENQuk_kyO4kBVQC4m7dx6QFVALibt3HprxmkBLsW67SCi3hDaW6l8OaHadBDjYnAypHNzbyKh5"
+                    className="Gallery"
+                    src="https://static.xx.fbcdn.net/rsrc.php/v4/y7/r/Ivw7nhRtXyo.png"
                     alt=""
                   />
                 </div>
-                <div className="user">
+
+                <div className="User  hidden sm:block">
                   <img
                     className="cursor-pointer"
                     src="https://static.xx.fbcdn.net/rsrc.php/v4/yq/r/b37mHA1PjfK.png?_nc_eui2=AeEqoau4P7ymL0lhacnm04-Cc9ExYuivsM1z0TFi6K-wzaCouKPbzRuPCRLC0qEMMUdm18lGvPqCTbAelV7KwsS5"
                     alt=""
                   />
                 </div>
-                <div className="emogi">
+
+                <div className="Emogi">
                   <img
                     className="cursor-pointer"
                     src="https://static.xx.fbcdn.net/rsrc.php/v4/yd/r/Y4mYLVOhTwq.png?_nc_eui2=AeFhHzYJLSh8b4ns9cYSqDlRfPQ6N5_OUfV89Do3n85R9X2jcsCGAZzlMhSSlAnKufNLmh7S_vkYB6BJxFVqOAob"
                     alt=""
                   />
                 </div>
-                <div className="location">
+
+                <div className="Location hidden sm:block">
                   <img
                     className="cursor-pointer"
                     src="https://static.xx.fbcdn.net/rsrc.php/v4/y1/r/8zlaieBcZ72.png?_nc_eui2=AeHSMd2x3jI6yKqEy3VTyIEyu7QmHo__KE27tCYej_8oTVcwQAzrt0GUmIgtqzXH5kUEbtS-_w5FKhZ7mjoMXDFS"
                     alt=""
                   />
                 </div>
-                <div className="whatsapp">
+
+                <div className="Whatsapp">
                   <img
                     className="cursor-pointer"
                     src="https://static.xx.fbcdn.net/rsrc.php/v4/y3/r/NeSKjwaLVhE.png?_nc_eui2=AeGYdOy1KLRhiKKlihnqgwzAIokjsgz5C4ciiSOyDPkLh9fBa0KFXl8Lt0pI8P7FRvhT8lOaJ-GS6mB3RcJSxkYF"
                     alt=""
                   />
                 </div>
+
                 <div className="dot text-gray-500 text-[21px]">
                   <HiOutlineDotsHorizontal cursor="pointer" />
                 </div>
@@ -443,7 +563,7 @@ export default function InputPost() {
               <button
                 disabled={disable}
                 onClick={handleNext}
-                className={` text-white flex items-center justify-center w-[92%] py-2 mx-auto mt-4 rounded-lg shadow  cursor-pointer mb-1 ${
+                className={`text-white flex items-center justify-center w-[92%] py-2 mx-auto mt-4 rounded-lg shadow  cursor-pointer mb-1 ${
                   disable || postLoading ? "bg-gray-400" : "bg-[#0F5EEA]"
                 }`}
               >

@@ -17,6 +17,7 @@ import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { postReset, servicePost } from "../../../../../features/post/postSlice";
 import { toast } from "react-hot-toast";
 import { HashLoader } from "react-spinners";
+import axios from "axios";
 
 export default function InputPost() {
   const [open, setOpen] = useState(false);
@@ -30,6 +31,7 @@ export default function InputPost() {
   const [media, setMedia] = useState(false);
   const [selectImage, setSelectImage] = useState(false);
   const [url, setUrl] = useState(null);
+  const [Image, setImage] = useState(null);
 
   const { user, userMessage, userError, userSuccess, userLoading } =
     useSelector((state) => state.auth);
@@ -79,10 +81,48 @@ export default function InputPost() {
     }
   }, [url]);
 
+  // ..
+  // ..
+
+  const changeImage = (e) => {
+    let image = e.target.files[0];
+    let imageUrl = URL.createObjectURL(image);
+
+    setImage(image);
+    setUrl(imageUrl);
+    setSelectImage(true);
+  };
+
+  // ..
+
+  // Cloudnary FUNCTION
+
+  const cloudnaryFunction = async () => {
+    // let username = dynqluico;
+    // let password = txshpv85;
+
+    const cloudnaryData = new FormData();
+
+    cloudnaryData.append("file", Image);
+    cloudnaryData.append("upload_preset", "txshpv85");
+
+    const response = await axios.post(
+      "https://api.cloudinary.com/v1_1/dynqluico/image/upload",
+      cloudnaryData
+    );
+
+    console.log(response.data.url);
+  };
+
+  // ....
+  // ..
+
   const { post, postSuccess, postError, postLoading, postMessage } =
     useSelector((state) => state.album);
 
   const dispatch = useDispatch();
+
+  // .....BUTTON FUNCTION........
 
   const handleNext = (e) => {
     e.preventDefault();
@@ -93,7 +133,9 @@ export default function InputPost() {
       user_id: user?._id,
     };
 
-    dispatch(servicePost(postData));
+    cloudnaryFunction();
+
+    // dispatch(servicePost(postData));
 
     setMedia(false);
     setSelectImage(false);
@@ -120,14 +162,6 @@ export default function InputPost() {
       dispatch(postReset());
     }
   }, [postError, postSuccess]);
-
-  const changeImage = (e) => {
-    let image = e.target.files[0];
-    let imageUrl = URL.createObjectURL(image);
-
-    setUrl(imageUrl);
-    setSelectImage(true);
-  };
 
   return (
     <>

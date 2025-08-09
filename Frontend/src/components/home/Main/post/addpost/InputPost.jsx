@@ -102,7 +102,6 @@ export default function InputPost() {
     // let password = txshpv85;
 
     const cloudnaryData = new FormData();
-
     cloudnaryData.append("file", Image);
     cloudnaryData.append("upload_preset", "txshpv85");
 

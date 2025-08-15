@@ -32,7 +32,6 @@ export default function InputPost() {
   const [selectImage, setSelectImage] = useState(false);
   const [url, setUrl] = useState(null);
   const [Image, setImage] = useState(null);
-  const [cloudLink, setCloudLink] = useState("");
   const [cloudLoading, setCloudLoading] = useState(false);
 
   const { user, userMessage, userError, userSuccess, userLoading } =
@@ -100,10 +99,11 @@ export default function InputPost() {
   // Cloudnary FUNCTION
 
   const cloudnaryFunction = async () => {
-    setCloudLoading(true);
     // let username = dynqluico;
     // let password = txshpv85;
     try {
+      setCloudLoading(true);
+
       const cloudnaryData = new FormData();
       cloudnaryData.append("file", Image);
       cloudnaryData.append("upload_preset", "txshpv85");
@@ -113,13 +113,16 @@ export default function InputPost() {
         cloudnaryData
       );
 
-      setCloudLink(response.data.url);
       console.log(response.data.url);
+      setImage(null);
+      setUrl(null);
+      setSelectImage(false);
       setCloudLoading(false);
 
       return response.data.url;
     } catch (error) {
       console.log(error);
+      setCloudLoading(false);
     }
   };
 
@@ -145,6 +148,7 @@ export default function InputPost() {
 
     dispatch(servicePost(postData));
 
+    setopenColor(false);
     setMedia(false);
     setSelectImage(false);
     setUrl(null);
@@ -606,10 +610,16 @@ export default function InputPost() {
                 disabled={disable || cloudLoading}
                 onClick={handleNext}
                 className={`text-white flex items-center justify-center w-[92%] py-2 mx-auto mt-4 rounded-lg shadow  cursor-pointer mb-1 ${
-                  disable || postLoading ? "bg-gray-400" : "bg-[#0F5EEA]"
+                  disable || postLoading || cloudLoading
+                    ? "bg-gray-400"
+                    : "bg-[#0F5EEA]"
                 }`}
               >
-                {postLoading ? <HashLoader size={24} color="white" /> : " Next"}
+                {postLoading || cloudLoading ? (
+                  <HashLoader size={24} color="white" />
+                ) : (
+                  " Next"
+                )}
               </button>
             </div>
           </div>

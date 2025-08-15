@@ -16,13 +16,13 @@ const Profile = () => {
 
   return (
     <>
-      <div className="right-Side-Bar fixed top-14 right-5 h-[462px] w-90 bg-[#FCFCFC] shadow-xl shadow-gray-300 rounded-2xl z-700">
+      <div className="right-Side-Bar fixed top-30 sm:top-14 right-[6px] sm:right-5 h-[462px] w-68 sm:w-90 bg-[#FCFCFC] shadow-xl shadow-gray-300 rounded-2xl z-700">
         {/* // .....card */}
 
-        <div className="card py-1 px-1 shadow-lg mt-3 mb-4 bg-[#FFFFFF] w-[91%] mx-auto rounded-xl">
+        <div className="card py-1 px-1 shadow-lg mt-3 mb-4 bg-[#FFFFFF] w-[94%] sm:w-[91%] mx-auto rounded-xl">
           <div className="pic py-3 px-2 flex items-center gap-3 hover:bg-gray-100 rounded-xl transition-all cursor-pointer">
             <div className="icon">
-              <CgProfile size={34} className=" sm:text-[20px] " />
+              <CgProfile size={34} className="" />
             </div>
             <div className="text-[16.4px] font-semibold">
               {user?.f_name} {user?.l_name}
@@ -123,23 +123,23 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className="nav leading-4 pt-3 flex gap-2 items-center justify-center text-[13px] font-semibold text-gray-500 mx-3">
-          <div className="p hover:underline cursor-pointer">Privacy .</div>
-          <div className="p hover:underline cursor-pointer"> Terms .</div>
-          <div className="p hover:underline cursor-pointer">Advertising .</div>
+        <div className="nav sm:leading-4 pt-3 flex gap-2 items-center justify-center text-[11px] sm:text-[13px] font-semibold text-gray-500 mx-1 sm:mx-3">
+          <div className="p hover:underline cursor-pointer">Privacy </div>
+          <div className="p hover:underline cursor-pointer"> Terms </div>
+          <div className="p hover:underline cursor-pointer">Advertising </div>
           <div className="p flex items-center gap-1">
             <p className="hover:underline cursor-pointer">Ad choices </p>
-            <GiTriangleTarget className="rotate-90" />
+            <GiTriangleTarget className="rotate-90 hidden sm:block" />
           </div>
-          <div className="p hover:underline cursor-pointer"> Cookies .</div>
+          <div className="p hover:underline cursor-pointer"> Cookies </div>
         </div>
 
-        <div className="flex pl-1 gap-2 items-center text-[13px] text-gray-500 mx-3">
-          <div className="p cursor-pointer hover:underline">More .</div>
+        <div className="flex pl-1 gap-2 items-center text-[11px] sm:text-[13px] text-gray-500 mx-2 sm:mx-3">
+          <div className="p cursor-pointer hover:underline">More </div>
           <div className="p flex items-center gap-1">
             <p className="p cursor-pointer hover:underline">Meta </p>
             <TbSquareRoundedLetterC className="cursor-pointer" />
-            <div className="p text-[13px] cursor-pointer hover:underline">
+            <div className=" text-[12px] sm:text-[13px] cursor-pointer hover:underline">
               2025
             </div>
           </div>

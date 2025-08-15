@@ -92,19 +92,25 @@ const Getpost = () => {
 
               <div
                 style={{
-                  backgroundImage: item?.background?.image
-                    ? `url(${item?.background?.image})`
-                    : item?.background.startColor && item?.background?.endColor
-                    ? `linear-gradient(60deg,${item?.background?.startColor},${item?.background?.endColor})`
-                    : "transparent",
+                  backgroundImage:
+                    item?.background?.image || item?.cloudLink
+                      ? `url(${
+                          item?.cloudLink
+                            ? item?.cloudLink
+                            : item?.background?.image
+                        })`
+                      : `linear-gradient(${item?.background?.startColor},${item?.background?.endColor})`,
+
                   backgroundPosition: "center",
                   backgroundSize: "100% 100%",
                   backgroundRepeat: "no-repeat",
                 }}
-                className={`IMAGE mt-3 sm:mt-4 cursor-pointer flex items-center justify-center ${
-                  item?.background?.startColor == "#ffffff"
-                    ? "h-[0px] sm:h-[0px] text-black"
-                    : "h-[280px] sm:h-[370px] text-white"
+                className={`IMAGE mt-3 sm:mt-4 cursor-pointer flex items-center justify-center  ${
+                  item?.background?.image || item?.cloudLink
+                    ? "h-[320px] sm:h-[390px] text-white"
+                    : item?.background?.startColor == "#ffffff"
+                    ? "h-[0px] text-black"
+                    : "h-[320px] sm:h-[390px] text-white"
                 }`}
               >
                 <p className="first-letter:uppercase text-[19px] sm:text-[25px] px-3 sm:px-9">

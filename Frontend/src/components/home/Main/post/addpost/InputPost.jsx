@@ -32,6 +32,8 @@ export default function InputPost() {
   const [selectImage, setSelectImage] = useState(false);
   const [url, setUrl] = useState(null);
   const [Image, setImage] = useState(null);
+  const [cloudLink, setCloudLink] = useState("");
+  const [cloudLoading, setCloudLoading] = useState(false);
 
   const { user, userMessage, userError, userSuccess, userLoading } =
     useSelector((state) => state.auth);
@@ -98,19 +100,27 @@ export default function InputPost() {
   // Cloudnary FUNCTION
 
   const cloudnaryFunction = async () => {
+    setCloudLoading(true);
     // let username = dynqluico;
     // let password = txshpv85;
+    try {
+      const cloudnaryData = new FormData();
+      cloudnaryData.append("file", Image);
+      cloudnaryData.append("upload_preset", "txshpv85");
 
-    const cloudnaryData = new FormData();
-    cloudnaryData.append("file", Image);
-    cloudnaryData.append("upload_preset", "txshpv85");
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dynqluico/image/upload",
+        cloudnaryData
+      );
 
-    const response = await axios.post(
-      "https://api.cloudinary.com/v1_1/dynqluico/image/upload",
-      cloudnaryData
-    );
+      setCloudLink(response.data.url);
+      console.log(response.data.url);
+      setCloudLoading(false);
 
-    console.log(response.data.url);
+      return response.data.url;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // ....
@@ -123,18 +133,17 @@ export default function InputPost() {
 
   // .....BUTTON FUNCTION........
 
-  const handleNext = (e) => {
+  const handleNext = async (e) => {
     e.preventDefault();
 
     const postData = {
       textArea,
       background: selectedColor,
       user_id: user?._id,
+      cloudLink: await cloudnaryFunction(),
     };
 
-    cloudnaryFunction();
-
-    // dispatch(servicePost(postData));
+    dispatch(servicePost(postData));
 
     setMedia(false);
     setSelectImage(false);
@@ -594,7 +603,7 @@ export default function InputPost() {
 
             <div className="BUTTON flex justify-center">
               <button
-                disabled={disable}
+                disabled={disable || cloudLoading}
                 onClick={handleNext}
                 className={`text-white flex items-center justify-center w-[92%] py-2 mx-auto mt-4 rounded-lg shadow  cursor-pointer mb-1 ${
                   disable || postLoading ? "bg-gray-400" : "bg-[#0F5EEA]"

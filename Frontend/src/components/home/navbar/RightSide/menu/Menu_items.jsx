@@ -6,17 +6,17 @@ import { Create_data } from "../data/Create_data";
 const Menu_items = () => {
   return (
     <>
-      <div className="right-Side-Bar z-700 h-[513px] overflow-y-hidden bg-[#F8F9FB] fixed top-14 right-5 w-155  pb-15 shadow-2xl rounded-xl pr-1">
+      <div className="right-Side-Bar z-700 h-[460px] sm:h-[513px] overflow-y-hidden bg-[#F8F9FB] fixed top-29 sm:top-14 right-[5px] sm:right-5 sm:w-155 w-69  pb-15 shadow-2xl rounded-xl pr-1">
         <div className="fixed bg-[#F8F9FB] w-[45%] pt-2 rounded-xl px-4">
-          <p className="text-[24px] font-bold">Menu</p>
+          <p className="text-[23px] font-bold">Menu</p>
         </div>
 
-        <div className="overflow-y-scroll w-[99%] h-full mt-13 pb-2 px-4 scrollbar">
+        <div className="overflow-y-scroll overflow-x-hidden w-[99%] h-full mt-12 sm:mt-13 pb-2 px-2 scrollbar">
           <div className="grid  grid-cols-1 sm:grid-cols-3 items-center gap-4">
             <div className="left sm:col-span-2 bg-[#FFFFFF] rounded-lg py-4 shadow-sm">
               {/* ...input.... */}
-              <div className="px-4">
-                <div className="inputparent bg-[#F0F2F5] flex items-center px-2 sm:px-3 py-2 rounded-full gap-2">
+              <div className="px-2 sm:px-4">
+                <div className="inputparent bg-[#F0F2F5] flex items-center px-2 sm:px-3 py-2 rounded-full gap-3">
                   <IoIosSearch className="text-[17px] sm:text-[18px] text-gray-700 transition-all" />
 
                   <input

@@ -4,7 +4,7 @@ export const postSchema = mongoose.Schema(
   {
     textArea: {
       type: String,
-      required: true,
+      required: false,
     },
     background: {
       startColor: {
@@ -24,6 +24,11 @@ export const postSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "user",
+    },
+    cloudLink: {
+      type: "String",
+      default: "",
+      required: false,
     },
   },
   {

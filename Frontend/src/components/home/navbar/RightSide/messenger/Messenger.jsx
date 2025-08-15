@@ -6,14 +6,14 @@ import { IoIosSearch } from "react-icons/io";
 const Messenger = () => {
   return (
     <>
-      <div className="fixed z-700 top-[67px] py-2 right-5 bg-[#FFFFFF] w-[340px] h-[400px] rounded-xl">
+      <div className="fixed z-700 top-[120px] sm:top-[67px] py-2 right-[6px] sm:right-5 bg-[#FFFFFF] w-[274px] sm:w-[340px] h-[400px] rounded-xl shadow-xl">
         <div className="TOP pb-1">
           <div className="chat flex justify-between items-center px-4">
             <div className="TEXT font-bold text-[25px]">Chats</div>
-            <div className="icons flex gap-4 items-center justify-center text-[18px] text-gray-500">
-              <BsThreeDots />
-              <FaArrowsAlt />
-              <FaEdit />
+            <div className="icons  flex gap-4 items-center justify-center text-[18px] text-gray-500">
+              <BsThreeDots cursor="pointer" />
+              <FaArrowsAlt cursor="pointer" />
+              <FaEdit cursor="pointer" />
             </div>
           </div>
 

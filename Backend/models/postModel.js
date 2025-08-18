@@ -6,6 +6,7 @@ export const postSchema = mongoose.Schema(
       type: String,
       required: false,
     },
+
     background: {
       startColor: {
         type: String,
@@ -20,14 +21,22 @@ export const postSchema = mongoose.Schema(
         default: "",
       },
     },
+
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "user",
     },
+
     cloudLink: {
       type: "String",
       default: "",
+      required: false,
+    },
+
+    reaction: {
+      type: Array,
+      default: [],
       required: false,
     },
   },

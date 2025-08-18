@@ -92,12 +92,6 @@ const Getpost = () => {
 
               <div
                 style={{
-                  // backgroundImage: item?.background?.image
-                  //   ? `url(${item?.background?.image})`
-                  //   : item?.background.startColor && item?.background?.endColor
-                  //   ? `linear-gradient(60deg,${item?.background?.startColor},${item?.background?.endColor})`
-                  //   : "transparent",
-
                   backgroundImage:
                     item?.background?.image || item?.cloudLink
                       ? `url(${

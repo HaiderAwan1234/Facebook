@@ -27,23 +27,20 @@ export const postEmogi = async (req, res) => {
   const findPost = await Post.findById(post_id);
 
   if (!findPost) {
-    res.status(404);
+    res.send(404);
     throw new Error("Post not found !!");
   }
 
-  // Find the index of the existing reaction
-  const checkLike = findPost.reaction.findIndex((item) => {
-    return item.id == user_id && item.type === emogi;
+  const checkLike = findPost.reaction.find((item) => {
+    return item.id == user_id;
   });
 
-  if (checkLike === -1) {
-    // If not found, add the reaction
+  if (!checkLike) {
     findPost.reaction.push({ type: emogi, id: user_id });
   } else {
-    // If found, remove it using splice
     findPost.reaction.splice(checkLike, 1);
   }
 
-  await findPost.save();
+  findPost.save();
   res.send(findPost);
 };

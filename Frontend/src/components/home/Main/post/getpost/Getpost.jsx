@@ -13,6 +13,7 @@ import {
 } from "../../../../../features/post/postSlice";
 import toast from "react-hot-toast";
 import moment from "moment";
+import EmojiReactions from "./Emogi";
 
 const Getpost = () => {
   const { post, postSuccess, postError, postMessage, postLoading } =
@@ -156,14 +157,16 @@ const Getpost = () => {
               <hr className="mx-3 mt-2 text-gray-300" />
 
               <div className="WRITE/LIKE/COMMENT/SHARE flex items-center justify-between px-1 sm:px-5 mt-1 text-gray-600">
-                <div className="LIKE flex items-center justify-center gap-1 hover:bg-gray-100 transition-all px-3 sm:px-13 py-1 rounded-md cursor-pointer">
+                <EmojiReactions />
+
+                {/* <div className="LIKE flex items-center justify-center gap-1 hover:bg-gray-100 transition-all px-3 sm:px-13 py-1 rounded-md cursor-pointer">
                   <div className="icon translate-y-[1px] cursor-pointer">
                     <GoThumbsup />
                   </div>
                   <div className="text  text-[14px] sm:text-[16px] font-semibold cursor-pointer">
                     Like
                   </div>
-                </div>
+                </div> */}
 
                 <div className="COMMENT flex items-center justify-center gap-1  hover:bg-gray-100 transition-all px-2 sm:px-9 py-1 rounded-md cursor-pointer">
                   <div className="icon translate-y-[1px] cursor-pointer">

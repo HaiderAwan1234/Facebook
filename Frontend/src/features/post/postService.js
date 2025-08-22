@@ -16,3 +16,12 @@ export const getPostService = async () => {
 
   return response.data;
 };
+
+export const reactionService = async (reactionData) => {
+  const response = await axios.post(
+    `http://localhost:5174/api/post/${reactionData.post_id}/${reactionData.user_id}`,
+    reactionData
+  );
+
+  return response.data;
+};

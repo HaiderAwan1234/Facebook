@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getPostService, postService } from "./postService";
+import { getPostService, postService, reactionService } from "./postService";
 
 const initialState = {
   post: [],
@@ -7,6 +7,10 @@ const initialState = {
   postSuccess: false,
   postMessage: "",
   postLoading: false,
+
+  reactionError: false,
+  reactionSuccess: false,
+  reactionLoading: false,
 };
 
 export const servicePost = createAsyncThunk(
@@ -31,6 +35,17 @@ export const serviceGetPost = createAsyncThunk(
   }
 );
 
+export const serviceReaction = createAsyncThunk(
+  "postReaction",
+  async (reactionData, thunkAPI) => {
+    try {
+      return await reactionService(reactionData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
 export const postSlice = createSlice({
   name: "post",
   initialState,
@@ -40,6 +55,10 @@ export const postSlice = createSlice({
       state.postSuccess = false;
       state.postMessage = "";
       state.postLoading = false;
+
+      state.reactionLoading = false;
+      state.reactionError = false;
+      state.reactionSuccess = false;
     },
   },
   extraReducers: (builder) => {
@@ -71,6 +90,21 @@ export const postSlice = createSlice({
       .addCase(serviceGetPost.fulfilled, (state, action) => {
         state.postLoading = false;
         state.postError = false;
+        state.post = action.payload;
+      })
+      .addCase(serviceReaction.pending, (state, action) => {
+        state.reactionLoading = true;
+      })
+      .addCase(serviceReaction.rejected, (state, action) => {
+        state.reactionError = true;
+        state.reactionLoading = false;
+        state.reactionSuccess = false;
+        state.postMessage = action.payload;
+      })
+      .addCase(serviceReaction.fulfilled, (state, action) => {
+        state.reactionSuccess = true;
+        state.reactionLoading = false;
+        state.reactionError = false;
         state.post = action.payload;
       });
   },

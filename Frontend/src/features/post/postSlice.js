@@ -103,9 +103,8 @@ export const postSlice = createSlice({
       })
       .addCase(serviceReaction.fulfilled, (state, action) => {
         state.reactionSuccess = true;
-        state.reactionLoading = false;
         state.reactionError = false;
-        state.post = action.payload;
+        state.reactionLoading = false;
       });
   },
 });

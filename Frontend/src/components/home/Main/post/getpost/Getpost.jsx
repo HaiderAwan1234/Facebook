@@ -157,7 +157,7 @@ const Getpost = () => {
               <hr className="mx-3 mt-2 text-gray-300" />
 
               <div className="WRITE/LIKE/COMMENT/SHARE flex items-center justify-between px-1 sm:px-5 mt-1 text-gray-600">
-                <EmojiReactions />
+                <EmojiReactions post_id={item?._id} />
 
                 {/* <div className="LIKE flex items-center justify-center gap-1 hover:bg-gray-100 transition-all px-3 sm:px-13 py-1 rounded-md cursor-pointer">
                   <div className="icon translate-y-[1px] cursor-pointer">

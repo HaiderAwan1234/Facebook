@@ -19,7 +19,6 @@ export const getPost = async (req, res) => {
 
   res.send(allPost);
 };
-
 export const postEmogi = async (req, res) => {
   const { emogi } = req.body;
   const { user_id, post_id } = req.params;
@@ -27,20 +26,26 @@ export const postEmogi = async (req, res) => {
   const findPost = await Post.findById(post_id);
 
   if (!findPost) {
-    res.send(404);
-    throw new Error("Post not found !!");
+    res.status(404).send("Post not found !!");
+    return;
   }
 
-  const checkLike = findPost.reaction.find((item) => {
-    return item.id == user_id;
-  });
+  const checkLike = findPost.reaction.find((item) => item.id == user_id);
 
   if (!checkLike) {
     findPost.reaction.push({ type: emogi, id: user_id });
   } else {
-    findPost.reaction.splice(checkLike, 1);
+    if (checkLike.type === emogi) {
+      const index = findPost.reaction.findIndex((item) => item.id == user_id);
+      findPost.reaction.splice(index, 1);
+    } else {
+      checkLike.type = emogi;
+    }
   }
 
-  findPost.save();
+  // Force mongoose to detect nested array changes
+  findPost.markModified("reaction");
+
+  await findPost.save();
   res.send(findPost);
 };

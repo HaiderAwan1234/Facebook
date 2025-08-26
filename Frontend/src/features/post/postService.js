@@ -19,7 +19,7 @@ export const getPostService = async () => {
 
 export const reactionService = async (reactionData) => {
   const response = await axios.post(
-    `http://localhost:5174/api/post/${reactionData.post_id}/${reactionData.user_id}`,
+    `http://localhost:5174/api/post/emogiPost/${reactionData.post_id}/${reactionData.user_id}`,
     reactionData
   );
 

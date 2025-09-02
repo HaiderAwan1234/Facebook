@@ -19,6 +19,7 @@ export const getPost = async (req, res) => {
 
   res.send(allPost);
 };
+
 export const postEmogi = async (req, res) => {
   const { emogi } = req.body;
   const { user_id, post_id } = req.params;

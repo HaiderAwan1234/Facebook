@@ -261,7 +261,7 @@ export const login = async (req, res) => {
 
   const dcrypt = await bcrypt.compare(inputPassword, checkMail.inputPassword);
 
-  if (!dcrypt == checkMail.inputPassword) {
+  if (!dcrypt) {
     res.status(401);
     throw new Error("Invalid password !!");
   }

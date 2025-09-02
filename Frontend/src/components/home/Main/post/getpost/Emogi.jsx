@@ -57,13 +57,13 @@ export default function EmojiReactions({
   const dispatch = useDispatch();
 
   const handlePick = (key) => {
+    // If clicking the same reaction, remove it (dislike)
     if (key === reaction) {
-      setPendingReaction(null);
-      setReaction(null);
-      onChange(null);
+      setPendingReaction("remove"); // Set to remove instead of null
+      handleEmogi({ key, action: "remove" });
     } else {
-      setPendingReaction(key); // wait for API success
-      handleEmogi({ key });
+      setPendingReaction(key); // Set new reaction
+      handleEmogi({ key, action: "add" });
     }
     setOpen(false);
   };
@@ -73,6 +73,7 @@ export default function EmojiReactions({
       post_id,
       user_id: user?._id,
       emogi: r.key,
+      action: r.action, // Add action parameter to distinguish add/remove
     };
     dispatch(serviceReaction(reactionData));
   };
@@ -84,14 +85,21 @@ export default function EmojiReactions({
       setPendingReaction(null);
     }
 
-    if (reactionSuccess && pendingReaction) {
-      setReaction(pendingReaction);
-      onChange(pendingReaction);
+    if (reactionSuccess) {
+      if (pendingReaction === "remove") {
+        // Handle removal case
+        setReaction(null);
+        onChange(null);
+      } else if (pendingReaction) {
+        // Handle new reaction case
+        setReaction(pendingReaction);
+        onChange(pendingReaction);
+      }
       setPendingReaction(null);
     }
 
     dispatch(postReset());
-  }, [reactionError, reactionSuccess]);
+  }, [reactionError, reactionSuccess, pendingReaction]);
 
   return (
     <div ref={rootRef} className="relative inline-flex flex-col items-center">

@@ -42,9 +42,9 @@ const LoginForm = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    const otpData = { inputEmail, inputPassword };
+    const loginData = { inputEmail, inputPassword };
 
-    dispatch(serviceLogin(otpData));
+    dispatch(serviceLogin(loginData));
   };
 
   useEffect(() => {

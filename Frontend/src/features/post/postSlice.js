@@ -1,5 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getPostService, postService, reactionService } from "./postService";
+import {
+  getPostService,
+  getReactionService,
+  postService,
+  reactionService,
+} from "./postService";
 
 const initialState = {
   post: [],
@@ -8,6 +13,7 @@ const initialState = {
   postMessage: "",
   postLoading: false,
 
+  reacts: [],
   reactionError: false,
   reactionSuccess: false,
   reactionLoading: false,
@@ -40,6 +46,17 @@ export const serviceReaction = createAsyncThunk(
   async (reactionData, thunkAPI) => {
     try {
       return await reactionService(reactionData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
+export const serviceGetReaction = createAsyncThunk(
+  "getReaction",
+  async (getReactionData, thunkAPI) => {
+    try {
+      return await getReactionService(getReactionData);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.error);
     }
@@ -105,6 +122,21 @@ export const postSlice = createSlice({
         state.reactionSuccess = true;
         state.reactionError = false;
         state.reactionLoading = false;
+      })
+      .addCase(serviceGetReaction.pending, (state, action) => {
+        state.reactionLoading = true;
+      })
+      .addCase(serviceGetReaction.rejected, (state, action) => {
+        state.reactionError = true;
+        state.reactionLoading = false;
+        state.reactionSuccess = false;
+        state.postMessage = action.payload;
+      })
+      .addCase(serviceGetReaction.fulfilled, (state, action) => {
+        state.reactionSuccess = true;
+        state.reactionError = false;
+        state.reactionLoading = false;
+        state.reacts.push(action.payload);
       });
   },
 });

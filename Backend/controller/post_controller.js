@@ -50,3 +50,16 @@ export const postEmogi = async (req, res) => {
   await findPost.save();
   res.send(findPost);
 };
+
+export const getEmogi = async (req, res) => {
+  const { post_id } = req.params;
+
+  const findPost = await Post.findById(post_id);
+
+  if (!findPost) {
+    res.status(404);
+    throw new Error("Post not Found !!");
+  }
+
+  res.send(findPost.reaction);
+};

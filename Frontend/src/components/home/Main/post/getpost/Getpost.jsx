@@ -10,14 +10,24 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   postReset,
   serviceGetPost,
+  serviceGetReaction,
 } from "../../../../../features/post/postSlice";
 import toast from "react-hot-toast";
 import moment from "moment";
 import EmojiReactions from "./Emogi";
 
 const Getpost = () => {
-  const { post, postSuccess, postError, postMessage, postLoading } =
-    useSelector((state) => state.album);
+  const {
+    post,
+    postSuccess,
+    postError,
+    postMessage,
+    postLoading,
+
+    reactionSuccess,
+    reactionError,
+    reactionLoading,
+  } = useSelector((state) => state.album);
 
   const dispatch = useDispatch();
 
@@ -37,6 +47,14 @@ const Getpost = () => {
 
     dispatch(postReset());
   }, [postError, postSuccess]);
+
+  const getReactionData = {
+    post_id: post._id,
+  };
+
+  useEffect(() => {
+    dispatch(serviceGetReaction(getReactionData));
+  }, []);
 
   return (
     <>

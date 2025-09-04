@@ -25,3 +25,11 @@ export const reactionService = async (reactionData) => {
 
   return response.data;
 };
+
+export const getReactionService = async (getReactionData) => {
+  const response = await axios.get(
+    `http://localhost:5174/api/post/getEmogi/${getReactionData.post_id}`
+  );
+
+  return response.data;
+};

@@ -136,7 +136,7 @@ export const postSlice = createSlice({
         state.reactionSuccess = true;
         state.reactionError = false;
         state.reactionLoading = false;
-        state.reacts.push(action.payload);
+        state.reacts = action.payload;
       });
   },
 });

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { GoThumbsup } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
 import {
   postReset,
@@ -34,20 +33,17 @@ function useClickOutside(ref, handler) {
 
 export default function EmojiReactions({
   userReaction = null,
+  backReaction,
   post_id,
   onChange = () => {},
 }) {
   const [open, setOpen] = useState(false);
   const [hoverIndex, setHoverIndex] = useState(-1);
-
-  // ✅ reaction states
-  const [reaction, setReaction] = useState(userReaction); // confirmed emoji
-  const [pendingReaction, setPendingReaction] = useState(null); // waiting for API confirm
+  const [reaction, setReaction] = useState(userReaction); // current confirmed reaction
+  const [pendingReaction, setPendingReaction] = useState(null); // waiting API confirm
 
   const rootRef = useRef(null);
   useClickOutside(rootRef, () => setOpen(false));
-
-  const active = REACTIONS.find((r) => r.key === reaction) || null;
 
   const { user } = useSelector((state) => state.auth);
   const { reactionSuccess, reactionError, postMessage } = useSelector(
@@ -56,13 +52,24 @@ export default function EmojiReactions({
 
   const dispatch = useDispatch();
 
+  // ✅ Sync reaction with backend on refresh
+  useEffect(() => {
+    if (backReaction && user?._id) {
+      const found = backReaction.find((r) => r.id === user._id);
+      if (found) setReaction(found.type);
+    }
+  }, [backReaction, user?._id]);
+
+  const active = REACTIONS.find((r) => r.key === reaction) || null;
+
   const handlePick = (key) => {
-    // If clicking the same reaction, remove it (dislike)
     if (key === reaction) {
-      setPendingReaction("remove"); // Set to remove instead of null
+      // Remove reaction if clicked again
+      setPendingReaction("remove");
       handleEmogi({ key, action: "remove" });
     } else {
-      setPendingReaction(key); // Set new reaction
+      // Add new reaction
+      setPendingReaction(key);
       handleEmogi({ key, action: "add" });
     }
     setOpen(false);
@@ -73,12 +80,12 @@ export default function EmojiReactions({
       post_id,
       user_id: user?._id,
       emogi: r.key,
-      action: r.action, // Add action parameter to distinguish add/remove
+      action: r.action,
     };
     dispatch(serviceReaction(reactionData));
   };
 
-  // 🔥 update only when API confirms success
+  // ✅ Update only when API confirms success
   useEffect(() => {
     if (reactionError) {
       toast.error(postMessage);
@@ -87,11 +94,9 @@ export default function EmojiReactions({
 
     if (reactionSuccess) {
       if (pendingReaction === "remove") {
-        // Handle removal case
         setReaction(null);
         onChange(null);
       } else if (pendingReaction) {
-        // Handle new reaction case
         setReaction(pendingReaction);
         onChange(pendingReaction);
       }
@@ -99,7 +104,7 @@ export default function EmojiReactions({
     }
 
     dispatch(postReset());
-  }, [reactionError, reactionSuccess, pendingReaction]);
+  }, [reactionError, reactionSuccess, pendingReaction, dispatch, onChange]);
 
   return (
     <div ref={rootRef} className="relative inline-flex flex-col items-center">
@@ -145,13 +150,15 @@ export default function EmojiReactions({
         onMouseEnter={() => setOpen(true)}
         className="LIKE flex items-center justify-center gap-1 hover:bg-gray-100 transition-all px-3 sm:px-13 py-1 rounded-md cursor-pointer"
       >
-        <div className="icon translate-y-[1px] cursor-pointer">
-          {active ? (
-            <span className="text-lg">{active.emoji}</span>
-          ) : (
-            <GoThumbsup />
-          )}
+        <div className="icon -translate-y-[1px] cursor-pointer">
+          {reaction === "like" && "👍"}
+          {reaction === "haha" && "😂"}
+          {reaction === "love" && "❤"}
+          {reaction === "sad" && "😢"}
+          {reaction === "angry" && "😡"}
+          {reaction === "wow" && "😮"}
         </div>
+
         <div className="text text-[14px] sm:text-[16px] font-semibold cursor-pointer">
           {active ? active.label : "Like"}
         </div>

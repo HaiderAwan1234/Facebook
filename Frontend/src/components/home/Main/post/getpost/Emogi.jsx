@@ -6,6 +6,7 @@ import {
   serviceReaction,
 } from "../../../../../features/post/postSlice";
 import { toast } from "react-hot-toast";
+import { GoThumbsup } from "react-icons/go";
 
 const REACTIONS = [
   { key: "like", label: "Like", emoji: "👍" },
@@ -32,15 +33,15 @@ function useClickOutside(ref, handler) {
 }
 
 export default function EmojiReactions({
-  userReaction = null,
   backReaction,
   post_id,
+  currentReaction,
   onChange = () => {},
 }) {
   const [open, setOpen] = useState(false);
   const [hoverIndex, setHoverIndex] = useState(-1);
-  const [reaction, setReaction] = useState(userReaction); // current confirmed reaction
-  const [pendingReaction, setPendingReaction] = useState(null); // waiting API confirm
+  const [reaction, setReaction] = useState(currentReaction); // Use currentReaction from props
+  const [pendingReaction, setPendingReaction] = useState(null);
 
   const rootRef = useRef(null);
   useClickOutside(rootRef, () => setOpen(false));
@@ -52,13 +53,25 @@ export default function EmojiReactions({
 
   const dispatch = useDispatch();
 
-  // ✅ Sync reaction with backend on refresh
+  // ✅ Sync reaction with backend on refresh - FIXED
   useEffect(() => {
     if (backReaction && user?._id) {
-      const found = backReaction.find((r) => r.id === user._id);
-      if (found) setReaction(found.type);
+      // FIX: Use user_id instead of id
+      const found = backReaction.find((r) => r.user_id === user._id);
+      if (found) {
+        setReaction(found.type);
+      } else {
+        setReaction(null); // Reset if no reaction found
+      }
     }
   }, [backReaction, user?._id]);
+
+  // ✅ Also sync with the currentReaction prop
+  useEffect(() => {
+    if (currentReaction !== undefined) {
+      setReaction(currentReaction);
+    }
+  }, [currentReaction]);
 
   const active = REACTIONS.find((r) => r.key === reaction) || null;
 
@@ -104,7 +117,14 @@ export default function EmojiReactions({
     }
 
     dispatch(postReset());
-  }, [reactionError, reactionSuccess, pendingReaction, dispatch, onChange]);
+  }, [
+    reactionError,
+    reactionSuccess,
+    pendingReaction,
+    dispatch,
+    onChange,
+    postMessage,
+  ]);
 
   return (
     <div ref={rootRef} className="relative inline-flex flex-col items-center">
@@ -145,18 +165,19 @@ export default function EmojiReactions({
         )}
       </AnimatePresence>
 
-      {/* Main Like Button */}
+      {/* Main Like Button - Fixed to show emoji properly */}
       <div
         onMouseEnter={() => setOpen(true)}
         className="LIKE flex items-center justify-center gap-1 hover:bg-gray-100 transition-all px-3 sm:px-13 py-1 rounded-md cursor-pointer"
       >
-        <div className="icon -translate-y-[1px] cursor-pointer">
+        <div className="icon -translate-y-[1px] cursor-pointer text-[17px]">
           {reaction === "like" && "👍"}
           {reaction === "haha" && "😂"}
-          {reaction === "love" && "❤"}
+          {reaction === "love" && "❤️"}
           {reaction === "sad" && "😢"}
           {reaction === "angry" && "😡"}
           {reaction === "wow" && "😮"}
+          {!reaction && <GoThumbsup className="text-gray-600" />}
         </div>
 
         <div className="text text-[14px] sm:text-[16px] font-semibold cursor-pointer">

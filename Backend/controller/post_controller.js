@@ -14,9 +14,9 @@ export const post = async (req, res) => {
   res.send(newPost);
 };
 
+// Backend: controllers/postController.js
 export const getPost = async (req, res) => {
   const allPost = await Post.find().sort({ createdAt: -1 });
-
   res.send(allPost);
 };
 
@@ -31,13 +31,16 @@ export const postEmogi = async (req, res) => {
     return;
   }
 
-  const checkLike = findPost.reaction.find((item) => item.id == user_id);
+  // Fixed: Changed 'id' to 'user_id' for consistency
+  const checkLike = findPost.reaction.find((item) => item.user_id == user_id);
 
   if (!checkLike) {
-    findPost.reaction.push({ type: emogi, id: user_id });
+    findPost.reaction.push({ type: emogi, user_id: user_id }); // Fixed: using user_id
   } else {
     if (checkLike.type === emogi) {
-      const index = findPost.reaction.findIndex((item) => item.id == user_id);
+      const index = findPost.reaction.findIndex(
+        (item) => item.user_id == user_id
+      );
       findPost.reaction.splice(index, 1);
     } else {
       checkLike.type = emogi;
@@ -51,6 +54,7 @@ export const postEmogi = async (req, res) => {
   res.send(findPost);
 };
 
+// controllers/postController.js
 export const getEmogi = async (req, res) => {
   const { post_id } = req.params;
 

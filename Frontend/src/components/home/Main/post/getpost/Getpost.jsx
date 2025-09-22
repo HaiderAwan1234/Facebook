@@ -1,3 +1,4 @@
+// Frontend: components/Getpost.jsx
 import React, { useEffect } from "react";
 import { FaComment, FaHeart, FaRegComment, FaThumbsUp } from "react-icons/fa";
 import { HiDotsHorizontal } from "react-icons/hi";
@@ -50,9 +51,9 @@ const Getpost = () => {
   return (
     <div>
       {post.map((item, index) => {
-        // ✅ Find this user's reaction for the post
+        // ✅ Fixed: Now correctly using user_id field
         const myReaction =
-          item?.reaction?.find((r) => r.user_id === user?._id)?.emogi || null;
+          item?.reaction?.find((r) => r.user_id === user?._id)?.type || null;
 
         return (
           <div
@@ -132,13 +133,15 @@ const Getpost = () => {
                 <div className="ICONS flex items-center">
                   {[...new Set(item?.reaction.map((r) => r?.type))].map(
                     (type, index) => {
-                      if (type === "like") return "👍";
-                      if (type === "haha") return "😂";
-                      if (type === "love") return "❤";
-                      if (type === "sad") return "😢";
-                      if (type === "angry") return "😡";
-                      if (type === "wow") return "😮";
-                      return null;
+                      let emoji = null;
+                      if (type === "like") emoji = "👍";
+                      if (type === "haha") emoji = "😂";
+                      if (type === "love") emoji = "❤️";
+                      if (type === "sad") emoji = "😢";
+                      if (type === "angry") emoji = "😡";
+                      if (type === "wow") emoji = "😮";
+
+                      return emoji ? <span key={index}>{emoji}</span> : null;
                     }
                   )}
                 </div>
@@ -172,6 +175,7 @@ const Getpost = () => {
               <EmojiReactions
                 post_id={item?._id}
                 backReaction={item?.reaction}
+                currentReaction={myReaction} // Pass current reaction to child component
               />
 
               <div className="COMMENT flex items-center justify-center gap-1 hover:bg-gray-100 transition-all px-2 sm:px-9 py-1 rounded-md cursor-pointer">

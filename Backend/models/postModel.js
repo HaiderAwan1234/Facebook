@@ -39,6 +39,12 @@ export const postSchema = mongoose.Schema(
       default: [],
       required: false,
     },
+
+    comment: {
+      type: Array,
+      default: [],
+      required: false,
+    },
   },
   {
     timestamps: true,

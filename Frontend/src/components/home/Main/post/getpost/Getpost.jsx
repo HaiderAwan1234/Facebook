@@ -15,6 +15,7 @@ import {
 import toast from "react-hot-toast";
 import moment from "moment";
 import EmojiReactions from "./Emogi";
+import BasicModal from "./Comment";
 
 const Getpost = () => {
   const { post, postSuccess, postError, postMessage, reactionSuccess } =
@@ -178,14 +179,7 @@ const Getpost = () => {
                 currentReaction={myReaction} // Pass current reaction to child component
               />
 
-              <div className="COMMENT flex items-center justify-center gap-1 hover:bg-gray-100 transition-all px-2 sm:px-9 py-1 rounded-md cursor-pointer">
-                <div className="icon translate-y-[1px] cursor-pointer">
-                  <FaRegComment />
-                </div>
-                <div className="text text-[14px] sm:text-[16px] font-semibold cursor-pointer">
-                  Comment
-                </div>
-              </div>
+              <BasicModal />
 
               <div className="SHARE flex items-center justify-center gap-1 hover:bg-gray-100 transition-all px-3 sm:px-13 py-1 rounded-md cursor-pointer">
                 <div className="icon translate-y-[1px] cursor-pointer">

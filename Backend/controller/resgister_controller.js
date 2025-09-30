@@ -1,6 +1,7 @@
 import { User } from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import nodemailer, { createTransport } from "nodemailer";
+import jwt from "jsonwebtoken";
 
 export const otpGenerator = () => {
   let random = Math.random() * 900000;
@@ -8,7 +9,7 @@ export const otpGenerator = () => {
   return floor;
 };
 
-const sendMail = (f_name, inputEmail, newUser) => {
+const sendMail = (f_name, inputEmail, checkMail) => {
   const transport = createTransport({
     service: "gmail",
     auth: {
@@ -130,7 +131,7 @@ const sendMail = (f_name, inputEmail, newUser) => {
             <p>You're creating a new Facebook account with this email address. To confirm this is you, enter the following verification code in your browser:</p>
             
             <div class="otp-box">
-                <div class="otp-code">${newUser.otp}</div>
+                <div class="otp-code">${checkMail.otp}</div>
                 <div class="small-text">This code expires in 10 minutes</div>
             </div>
             
@@ -201,7 +202,7 @@ export const register = async (req, res) => {
 
   const hashPassword = await bcrypt.hash(inputPassword, 10);
 
-  const newUser = await User.create({
+  const checkMail = await User.create({
     f_name,
     l_name,
     inputEmail,
@@ -213,9 +214,21 @@ export const register = async (req, res) => {
     otp: otpGenerator(),
   });
 
-  sendMail(f_name, inputEmail, newUser);
+  sendMail(f_name, inputEmail, checkMail);
 
-  res.send(newUser);
+  res.send({
+    _id: checkMail._id,
+    f_name: checkMail.f_name,
+    l_name: checkMail.l_name,
+    inputEmail: checkMail.inputEmail,
+    inputPssword: checkMail.inputPssword,
+    date: checkMail.date,
+    month: checkMail.month,
+    year: checkMail.year,
+    gender: checkMail.gender,
+    otp: checkMail.otp,
+    token: await generateToken(checkMail._id),
+  });
 };
 
 export const verifyOTP = async (req, res) => {
@@ -266,5 +279,20 @@ export const login = async (req, res) => {
     throw new Error("Invalid password !!");
   }
 
-  res.send(checkMail);
+  res.send({
+    _id: checkMail._id,
+    f_name: checkMail.f_name,
+    l_name: checkMail.l_name,
+    inputEmail: checkMail.inputEmail,
+    date: checkMail.date,
+    month: checkMail.month,
+    year: checkMail.year,
+    gender: checkMail.gender,
+    otp: checkMail.otp,
+    token: await generateToken(checkMail._id),
+  });
+};
+
+const generateToken = async (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "15d" });
 };

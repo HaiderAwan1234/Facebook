@@ -67,3 +67,7 @@ export const getEmogi = async (req, res) => {
 
   res.send(findPost.reaction);
 };
+
+export const postComment = async (req, res) => {
+  res.send("This is comment");
+};

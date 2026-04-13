@@ -117,8 +117,8 @@ const Getpost = () => {
                 item?.background?.image || item?.cloudLink
                   ? "h-[300px] sm:h-[480px] text-white"
                   : item?.background?.startColor == "#ffffff"
-                  ? "h-[0px] text-black"
-                  : "h-[300px] sm:h-[480px] text-white"
+                    ? "h-[0px] text-black"
+                    : "h-[300px] sm:h-[480px] text-white"
               }`}
             >
               <p className="first-letter:uppercase text-[19px] sm:text-[25px] px-3 sm:px-9">
@@ -143,7 +143,7 @@ const Getpost = () => {
                       if (type === "wow") emoji = "😮";
 
                       return emoji ? <span key={index}>{emoji}</span> : null;
-                    }
+                    },
                   )}
                 </div>
                 <div className="TEXT">
@@ -179,7 +179,11 @@ const Getpost = () => {
                 currentReaction={myReaction} // Pass current reaction to child component
               />
 
+              {/* / ............ COMMENT MODAL........./ */}
+
               <BasicModal />
+
+              {/* / ............ COMMENT MODAL........./ */}
 
               <div className="SHARE flex items-center justify-center gap-1 hover:bg-gray-100 transition-all px-3 sm:px-13 py-1 rounded-md cursor-pointer">
                 <div className="icon translate-y-[1px] cursor-pointer">

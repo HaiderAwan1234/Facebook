@@ -6,7 +6,7 @@ import {
   postComment,
   postEmogi,
 } from "../controller/post_controller.js";
-import { tokenHandler } from "../middleware/tokenMiddleware.js";
+import { tokenHandler } from "./../middleware/tokenMiddleware.js";
 
 export const userPost = express.Router();
 

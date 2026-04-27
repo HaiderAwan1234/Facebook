@@ -57,15 +57,17 @@ export default function BasicModal() {
           <div className="overflow-y-scroll scrollbar"></div>
 
           <div className="full-Div h-[400px] overflow-y-scroll scrollbar">
-            <div className="div">
-              <img
+            <div className="IMAGE BABAR">
+              <div
+                className="h-[500px] w-full bg-center bg-cover"
                 style={{
+                  backgroundImage: `url("/commentImage/comment.png")`,
                   backgroundPosition: "center",
                   backgroundSize: "cover",
                 }}
-                className="image h-[500px] w-full"
-                src="https://scontent.fisb31-1.fna.fbcdn.net/v/t39.30808-6/674594046_1341553171352342_5699683895942687483_n.jpg?stp=dst-jpg_s640x640_tt6&_nc_cat=1&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeGiUvMHlumxbFLWiMNwvTSC5BCPkJAi6TnkEI-QkCLpOXT5Y3qhqnCNqcshe8cNvHuepn4fEmirnLmd6XqjkgGG&_nc_ohc=Rm9UMZik65cQ7kNvwElaRGB&_nc_oc=Adp0hPKnwEohIttqV5htmCYdtc9RxkVgHfTxWvvU2G77jm_7k1OFtJG07NIRRR6UMOA&_nc_zt=23&_nc_ht=scontent.fisb31-1.fna&_nc_gid=yQF40AbmhuX1NjRqQQXC2g&_nc_ss=7a3a8&oh=00_Af1gECiyztcRGnGlRLZ0NB8dNcszn5sliTi-Fh6Eigzjcg&oe=69EBBA26"
-              />
+              >
+                {/* Optional overlay content */}
+              </div>
             </div>
 
             <div className="p-3 space-y-3 max-h-[400px] overflow-y-auto">

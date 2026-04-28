@@ -39,7 +39,7 @@ export const postEmogi = async (req, res) => {
   } else {
     if (checkLike.type === emogi) {
       const index = findPost.reaction.findIndex(
-        (item) => item.user_id == user_id
+        (item) => item.user_id == user_id,
       );
       findPost.reaction.splice(index, 1);
     } else {

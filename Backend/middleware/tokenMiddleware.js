@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { User } from "./../models/userModel.js";
 
 export const tokenHandler = async (req, res, next) => {
   let token;
@@ -11,7 +12,12 @@ export const tokenHandler = async (req, res, next) => {
       token = req.headers.authorization.split(" ")[1];
 
       let decode = jwt.verify(token, process.env.JWT_SECRET);
-      console.log(decode);
+
+      let tokenUser = await User.findById(decode.id);
+      req.tokenUser = tokenUser;
+      next();
+
+      // ..../////
     } catch (error) {
       res.status(401);
       throw new Error("Invalid Token !!");

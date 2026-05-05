@@ -69,5 +69,18 @@ export const getEmogi = async (req, res) => {
 };
 
 export const postComment = async (req, res) => {
-  res.send("This is comment");
+  const { comment } = req.body;
+  const { post_id } = req.params;
+
+  const findPost = await Post.findById(post_id);
+
+  if (!findPost) {
+    res.status(404);
+    throw new Error("Post not Found !!");
+  }
+
+  findPost.comment.push({ user: req.tokenUser, comment });
+
+  await findPost.save();
+  res.send(findPost);
 };

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Modal } from "@mui/material";
 import { FaRegComment } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
+import { IoSend } from "react-icons/io5";
 
 const style = {
   position: "absolute",
@@ -39,10 +40,21 @@ export default function BasicModal() {
           {/* ... */}
           {/* Header */}
 
-          <div className="relative flex justify-center items-center py-4 border-b border-gray-500">
+          <div className="HEADER TOP flex justify-between items-center px-3 py-3 border-b border-gray-500">
+            {/* ////////...... */}
+            <div className="IMAGE bg-gray-200 w-9 h-9 rounded-full">
+              <img
+                src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3Dhttps://via.placeholder.com/40"
+                alt=""
+                className="w-9 h-9 rounded-full cursor-pointer"
+              />
+            </div>
+
+            {/* .......////// */}
+
             <h2 className="text-[20px] font-bold">Alexender Daniel</h2>
 
-            <div className="CROSS absolute right-5">
+            <div className="CROSS">
               <div
                 onClick={() => setOpen(false)}
                 className="bg-gray-200 w-9 h-9 flex items-center justify-center  rounded-full cursor-pointer"
@@ -59,7 +71,7 @@ export default function BasicModal() {
           <div className="full-Div h-[400px] overflow-y-scroll scrollbar">
             <div className="IMAGE BABAR">
               <div
-                className="h-[500px] w-full bg-center bg-cover"
+                className="h-[500px] w-full bg-center bg-cover cursor-pointer"
                 style={{
                   backgroundImage: `url("/commentImage/comment.png")`,
                   backgroundPosition: "center",
@@ -70,14 +82,16 @@ export default function BasicModal() {
               </div>
             </div>
 
-            <div className="p-3 space-y-3 max-h-[400px] overflow-y-auto">
+            <div className="p-3 space-y-2 max-h-[400px] overflow-y-auto">
               {/* Single Comment */}
-              <div className="flex items-start relative">
-                <img
-                  src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3Dhttps://via.placeholder.com/40"
-                  alt=""
-                  className="w-9 h-9 rounded-full mr-2"
-                />
+              <div className="flex items-start relative ">
+                <div className="IMAGE bg-gray-200 w-9 h-9 rounded-full mr-2 cursor-pointer">
+                  <img
+                    src="https://png.pngtree.com/png-clipart/20230927/original/pngtree-man-avatar-image-for-profile-png-image_13001882.png"
+                    alt=""
+                    className="w-9 h-9 rounded-full cursor-pointer"
+                  />
+                </div>
 
                 <div>
                   <div className="bg-[#e4e6eb] rounded-2xl px-3 py-2 max-w-[300px]">
@@ -105,7 +119,7 @@ export default function BasicModal() {
                 <img
                   src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3Dhttps://via.placeholder.com/40"
                   alt=""
-                  className="w-9 h-9 rounded-full mr-2"
+                  className="w-9 h-9 rounded-full mr-2 cursor-pointer"
                 />
 
                 <div>
@@ -137,7 +151,7 @@ export default function BasicModal() {
             <img
               src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D"
               alt=""
-              className="w-9 h-9 rounded-full"
+              className="w-9 h-9 rounded-full cursor-pointer"
             />
 
             <input
@@ -146,8 +160,12 @@ export default function BasicModal() {
                 setComment(e.target.value);
               }}
               placeholder="Write a comment..."
-              className="flex-1 bg-[#e4e6eb] text-gray-800 outline-0 rounded-full  px-4 py-2 text-sm"
+              className="INPUT flex-1 bg-[#e4e6eb] text-gray-800 outline-0 rounded-full  px-4 py-2 text-sm cursor-pointer"
             />
+
+            <div className="SEND cursor-pointer text-[21px]">
+              <IoSend />
+            </div>
           </div>
 
           {/* ....... INPUT....... */}

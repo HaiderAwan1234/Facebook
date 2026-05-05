@@ -18,4 +18,4 @@ userPost.post("/emogiPost/:post_id/:user_id", postEmogi);
 
 userPost.get("/getEmogi/:post_id", getEmogi);
 
-userPost.post("/commentPost", tokenHandler, postComment);
+userPost.post("/commentPost/:post_id", tokenHandler, postComment);

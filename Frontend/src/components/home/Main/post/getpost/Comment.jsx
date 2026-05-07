@@ -3,6 +3,8 @@ import { Box, Modal } from "@mui/material";
 import { FaRegComment } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 import { IoSend } from "react-icons/io5";
+import { FaUserGroup } from "react-icons/fa6";
+import { HiOutlineDotsHorizontal } from "react-icons/hi";
 
 const style = {
   position: "absolute",
@@ -42,17 +44,11 @@ export default function BasicModal() {
 
           <div className="HEADER TOP flex justify-between items-center px-3 py-3 border-b border-gray-500">
             {/* ////////...... */}
-            <div className="IMAGE bg-gray-200 w-9 h-9 rounded-full">
-              <img
-                src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3Dhttps://via.placeholder.com/40"
-                alt=""
-                className="w-9 h-9 rounded-full cursor-pointer"
-              />
-            </div>
+            <div className="div"></div>
 
             {/* .......////// */}
 
-            <h2 className="text-[20px] font-bold">Alexender Daniel</h2>
+            <h2 className="text-[20px] font-bold">Alexender's Post</h2>
 
             <div className="CROSS">
               <div
@@ -66,9 +62,45 @@ export default function BasicModal() {
 
           {/* Comments */}
 
-          <div className="overflow-y-scroll scrollbar"></div>
-
           <div className="full-Div h-[400px] overflow-y-scroll scrollbar">
+            {/* ........../////// */}
+            <div className="PROFILE py-2 px-4">
+              <div className="FLEX MAIN flex justify-between items-center">
+                <div className="FLEX flex justify-center items-center gap-2">
+                  <div className="IMAGE bg-gray-200 w-9 h-9 rounded-full">
+                    <img
+                      src="https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D"
+                      alt=""
+                      className="w-9 h-9 rounded-full cursor-pointer"
+                    />
+                  </div>
+
+                  <div className="NAME leading-4">
+                    <p className="text-[15px] font-semibold">
+                      Alexender Daniel
+                    </p>
+                    <div className="text-[13.5px] font-semibold text-gray-600 flex items-center gap-1">
+                      <p>2d</p>
+                      <p className="pb-2">.</p>
+                      <p>
+                        <FaUserGroup />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-[22px] text-gray-600 cursor-pointer">
+                  <HiOutlineDotsHorizontal />
+                </div>
+              </div>
+
+              <div className="CAPTION pt-2">
+                {" "}
+                واجب تھی جس بات پر حیرانی بہت* *ہم لڑکھڑائے ، مسکرائے اور چل
+                دیے* *...!!!!*💔🌚
+              </div>
+            </div>
+
             <div className="IMAGE BABAR">
               <div
                 className="h-[500px] w-full bg-center bg-cover cursor-pointer"

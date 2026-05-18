@@ -5,6 +5,7 @@ import { RxCross1 } from "react-icons/rx";
 import { IoSend } from "react-icons/io5";
 import { FaUserGroup } from "react-icons/fa6";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import { useEffect } from "react";
 
 const style = {
   position: "absolute",
@@ -22,6 +23,19 @@ const style = {
 export default function BasicModal() {
   const [comment, setComment] = useState("");
   const [open, setOpen] = useState(false);
+  const [send, setSend] = useState(false);
+
+  const handleButton = () => {
+    setComment("");
+  };
+
+  useEffect(() => {
+    if (comment.length > 0) {
+      setSend(true);
+    } else {
+      setSend(false);
+    }
+  }, [comment]);
 
   return (
     <div>
@@ -37,7 +51,13 @@ export default function BasicModal() {
       </div>
 
       {/* Modal */}
-      <Modal open={open} onClose={() => setOpen(false)}>
+      <Modal
+        open={open}
+        onClose={() => {
+          setOpen(false);
+          setComment("");
+        }}
+      >
         <Box sx={style}>
           {/* ... */}
           {/* Header */}
@@ -52,7 +72,10 @@ export default function BasicModal() {
 
             <div className="CROSS">
               <div
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setOpen(false);
+                  setComment("");
+                }}
                 className="bg-gray-200 w-9 h-9 flex items-center justify-center  rounded-full cursor-pointer"
               >
                 <RxCross1 className="text-[18px]" />
@@ -188,16 +211,19 @@ export default function BasicModal() {
 
             <input
               value={comment}
-              onChange={(e) => {
-                setComment(e.target.value);
-              }}
+              onChange={(e) => setComment(e.target.value)}
               placeholder="Write a comment..."
               className="INPUT flex-1 bg-[#e4e6eb] text-gray-800 outline-0 rounded-full  px-4 py-2 text-sm cursor-pointer"
             />
 
-            <div className="SEND cursor-pointer text-[21px]">
+            <button
+              disabled={!send}
+              value={send}
+              onClick={handleButton}
+              className={`SEND cursor-pointer text-[21px] ${send ? "text-black" : "text-gray-500"} `}
+            >
               <IoSend />
-            </div>
+            </button>
           </div>
 
           {/* ....... INPUT....... */}

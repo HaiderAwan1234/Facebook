@@ -6,6 +6,7 @@ import { IoSend } from "react-icons/io5";
 import { FaUserGroup } from "react-icons/fa6";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const style = {
   position: "absolute",
@@ -117,11 +118,7 @@ export default function BasicModal() {
                 </div>
               </div>
 
-              <div className="CAPTION pt-2">
-                {" "}
-                واجب تھی جس بات پر حیرانی بہت* *ہم لڑکھڑائے ، مسکرائے اور چل
-                دیے* *...!!!!*💔🌚
-              </div>
+              <div className="CAPTION pt-2"> This is the End !</div>
             </div>
 
             <div className="IMAGE BABAR">
